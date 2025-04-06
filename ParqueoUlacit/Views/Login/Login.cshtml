@@ -1,0 +1,40 @@
+﻿@model ParqueoUlacit.Models.TableViewModel.UsuarioTableViewModel
+
+@{
+    ViewBag.Title = "Iniciar Sesión";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Iniciar Sesión</h2>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary()
+    </div>
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <!-- Formulario de inicio de sesión -->
+        <form method="post" action="@Url.Action("Login", "Login")">
+            <!-- Campo para el correo electrónico -->
+            <div class="mb-3">
+                <label class="form-label">Correo Electrónico</label>
+                <input type="email" name="Correo" class="form-control" required />
+            </div>
+
+            <!-- Campo para la contraseña -->
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <input type="password" name="Clave" class="form-control" required />
+            </div>
+
+            <!-- Botón de ingreso -->
+            <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+        </form>
+
+        <!-- Botón que redirige a la vista de creación de usuario -->
+        
+    </div>
+</div>

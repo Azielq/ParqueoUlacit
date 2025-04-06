@@ -1,0 +1,100 @@
+﻿@model ParqueoUlacit.Models.TableViewModel.UsuarioTableViewModel
+@{
+    ViewBag.Title = "Crear Nuevo Usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Crear Nuevo Usuario</h2>
+            <p>Complete la información para agregar un nuevo usuario al sistema.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Información del Usuario</h4>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Create", "Usuarios", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Nombre, "Nombre Completo", new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", placeholder = "Ingrese el nombre completo", required = "required" })
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Correo, "Correo Electrónico", new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Correo, new { @class = "form-control", type = "email", placeholder = "ejemplo@dominio.com", required = "required" })
+                            @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Identificacion, "Número de Identificación", new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Identificacion, new { @class = "form-control", placeholder = "Ingrese el número de identificación", required = "required" })
+                            @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaNacimiento, "Fecha de Nacimiento", new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.FechaNacimiento, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", required = "required" })
+                            @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RolID, "Rol del Usuario", new { @class = "form-label" })
+                            @Html.DropDownListFor(model => model.RolID, (SelectList)ViewBag.RolID, "Seleccione un Rol", new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.RolID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <i class="fa fa-info-circle"></i> La contraseña por defecto será <strong>Ulacit123</strong>. El usuario deberá cambiarla en su primer inicio de sesión.
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col">
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Index", "AdminHome")" class="btn btn-secondary">
+                                <i class="fa fa-arrow-left"></i> Volver al Panel
+                            </a>
+                            <button type="submit" class="btn btn-success" id="btnGuardar">
+                                <i class="fa fa-user-plus"></i> Guardar Usuario
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Ya tenemos el atributo required="required" en los campos,
+            // así que no necesitamos validación JavaScript adicional.
+            // La validación se realizará automáticamente por el navegador
+            // utilizando los atributos HTML5.
+        });
+    </script>
+}

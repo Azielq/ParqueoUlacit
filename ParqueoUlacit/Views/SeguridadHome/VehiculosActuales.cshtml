@@ -1,0 +1,118 @@
+﻿@model IEnumerable<ParqueoUlacit.Models.Vehiculo>
+@{
+    ViewBag.Title = "Vehículos Actuales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Vehículos Actuales en el Parqueo</h2>
+            <p>Listado de vehículos en el parqueo: <strong>@ViewBag.NombreParqueo</strong></p>
+        </div>
+        <div class="col-auto">
+            <a href="@Url.Action("Index", "SeguridadHome")" class="btn btn-secondary">
+                <i class="fa fa-arrow-left"></i> Volver al Panel
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Mensaje"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Vehículos en el Parqueo</h4>
+        </div>
+        <div class="card-body">
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info">
+                    No hay vehículos en el parqueo actualmente.
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="tablaVehiculos">
+                        <thead>
+                            <tr>
+                                <th>Placa</th>
+                                <th>Tipo</th>
+                                <th>Marca</th>
+                                <th>Color</th>
+                                <th>Usuario</th>
+                                <th>Ley 7600</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.NumeroPlaca</td>
+                                    <td>@item.Tipo</td>
+                                    <td>@item.Marca</td>
+                                    <td>@item.Color</td>
+                                    <td>
+                                        @if (item.Usuario != null)
+                                        {
+                                            @item.Usuario.Nombre
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No asignado</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.UsaEspacioLey7600 == true)
+                                        {
+                                            <span class="badge bg-info">Sí</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">No</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("RegistrarSalida", "SeguridadHome", new { id = item.VehiculoID })" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-sign-out"></i> Registrar Salida
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Si existe DataTables, inicializarlo
+            if ($.fn.DataTable) {
+                $('#tablaVehiculos').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                    }
+                });
+            }
+        });
+    </script>
+}

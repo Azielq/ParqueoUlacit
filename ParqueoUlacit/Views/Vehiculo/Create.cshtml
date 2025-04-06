@@ -1,0 +1,182 @@
+﻿@model ParqueoUlacit.Models.ViewModel.VehiculoViewModel
+@{
+    ViewBag.Title = "Crear Vehículo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Crear Nuevo Vehículo</h2>
+            <p>Complete la información para registrar un nuevo vehículo en el sistema.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Información del Vehículo</h4>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Create", "Vehiculo", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Marca, "Marca", new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Marca, new { @class = "form-control", placeholder = "Ingrese la marca del vehículo", required = "required" })
+                            @Html.ValidationMessageFor(model => model.Marca, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Color, "Color", new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Color, new { @class = "form-control", placeholder = "Ingrese el color del vehículo", required = "required" })
+                            @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NumeroPlaca, "Número de Placa", new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.NumeroPlaca, new { @class = "form-control", placeholder = "Ejemplo: ABC-123 o 123-456", required = "required" })
+                            @Html.ValidationMessageFor(model => model.NumeroPlaca, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Tipo, "Tipo de Vehículo", new { @class = "form-label" })
+                            @Html.DropDownListFor(model => model.Tipo,
+                                              new List<SelectListItem> {
+                                        new SelectListItem { Text = "Automóvil", Value = "Automovil" },
+                                        new SelectListItem { Text = "Moto", Value = "Moto" }
+                      },
+                                              "Seleccione Tipo de Vehículo", new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.UsuarioID, "Propietario", new { @class = "form-label" })
+                            @Html.DropDownListFor(model => model.UsuarioID, (SelectList)ViewBag.UsuarioID, "Seleccione Usuario", new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.UsuarioID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Estado, "Estado", new { @class = "form-label" })
+                            @Html.DropDownListFor(model => model.Estado,
+                                              new List<SelectListItem> {
+                                        new SelectListItem { Text = "Activo", Value = "Activo" },
+                                        new SelectListItem { Text = "Inactivo", Value = "Inactivo" },
+                                        new SelectListItem { Text = "Pendiente", Value = "Pendiente" }
+                      },
+                                              "Seleccione Estado", new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UsaEspacioLey7600)
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="UsaEspacioLey7600" value="true" @(Model.UsaEspacioLey7600 == true ? "checked" : "") />
+                            <input type="hidden" name="UsaEspacioLey7600" value="false" />
+                        </label>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.UsaEspacioLey7600)
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col">
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Index", "AdminHome")" class="btn btn-secondary">
+                                <i class="fa fa-arrow-left"></i> Volver al Panel
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-car"></i> Guardar Vehículo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Create a validation message element
+            var validationMessage = $('<div class="invalid-feedback">La placa debe tener formato LEO-100 o 123-456</div>');
+            $('#NumeroPlaca').after(validationMessage);
+
+            // Function to validate the license plate format
+            function validateLicensePlate(plate) {
+                // Check for letter-number format (LEO-100)
+                var letterNumberFormat = /^[A-Z]{3}-[0-9]{3,4}$/;
+
+                // Check for number-number format (123-456)
+                var numberNumberFormat = /^[0-9]{3}-[0-9]{3}$/;
+
+                return letterNumberFormat.test(plate) || numberNumberFormat.test(plate);
+            }
+
+            // Format and validate license plate input
+            $('#NumeroPlaca').on('input', function () {
+                var val = this.value.toUpperCase();
+                this.value = val;
+
+                // If there's already a hyphen, ensure there's only one
+                if (val.indexOf('-') !== -1) {
+                    var parts = val.split('-');
+                    if (parts.length > 2) {
+                        this.value = parts[0] + '-' + parts.slice(1).join('');
+                    }
+                }
+                // Auto-add hyphen after 3 characters
+                else if (val.length === 3) {
+                    this.value = val + '-';
+                }
+
+                // Validate the format
+                if (val.length > 0) {
+                    if (validateLicensePlate(val)) {
+                        $(this).removeClass('is-invalid').addClass('is-valid');
+                        validationMessage.hide();
+                    } else {
+                        $(this).removeClass('is-valid').addClass('is-invalid');
+                        validationMessage.show();
+                    }
+                } else {
+                    $(this).removeClass('is-valid is-invalid');
+                    validationMessage.hide();
+                }
+            });
+
+            // Form submission validation
+            $('form').on('submit', function (e) {
+                var plateValue = $('#NumeroPlaca').val();
+                if (!validateLicensePlate(plateValue)) {
+                    e.preventDefault();
+                    $('#NumeroPlaca').addClass('is-invalid');
+                    validationMessage.show();
+                    // Scroll to the field with error
+                    $('html, body').animate({
+                        scrollTop: $('#NumeroPlaca').offset().top - 100
+                    }, 200);
+                }
+            });
+        });
+    </script>
+}

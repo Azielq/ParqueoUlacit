@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Verificar Acceso";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">Verificar Acceso de Vehículo</h3>
+                    <a href="@Url.Action("Index", "SeguridadHome")" class="btn btn-light btn-sm">
+                        Volver al Panel
+                    </a>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @ViewBag.Error
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    @if (ViewBag.Mensaje != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @ViewBag.Mensaje
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <div class="alert alert-info">
+                        <p>Ingrese el número de placa del vehículo para verificar si puede ingresar al parqueo.</p>
+                    </div>
+
+                    @using (Html.BeginForm("VerificarAcceso", "SeguridadHome", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="numeroPlaca" class="form-label">Número de Placa</label>
+                                <input type="text" id="numeroPlaca" name="numeroPlaca" class="form-control form-control-lg" required
+                                       placeholder="Ingrese el número de placa" autofocus>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="fa fa-search"></i> Verificar Acceso
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

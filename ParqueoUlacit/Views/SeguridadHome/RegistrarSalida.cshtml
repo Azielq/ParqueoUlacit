@@ -1,0 +1,205 @@
+﻿@model ParqueoUlacit.Models.Vehiculo
+@{
+    ViewBag.Title = "Registrar Salida";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Registrar Salida de Vehículo</h2>
+            <p>Parqueo: <strong>@ViewBag.NombreParqueo</strong></p>
+        </div>
+        <div class="col-auto">
+            <a href="@Url.Action("VehiculosActuales", "SeguridadHome")" class="btn btn-secondary">
+                <i class="fa fa-arrow-left"></i> Volver a la Lista
+            </a>
+        </div>
+    </div>
+
+    @if (Model != null)
+    {
+        <!-- Mostrar detalles del vehículo si se ha seleccionado uno -->
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <h4 class="mb-0">Confirmar Salida del Vehículo</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-warning">
+                            <p><strong>¡Atención!</strong> Está a punto de registrar la salida del siguiente vehículo del parqueo:</p>
+                        </div>
+
+                        <div class="table-responsive mb-4">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th style="width: 30%">Número de Placa</th>
+                                    <td><strong>@Model.NumeroPlaca</strong></td>
+                                </tr>
+                                <tr>
+                                    <th>Tipo de Vehículo</th>
+                                    <td>@Model.Tipo</td>
+                                </tr>
+                                <tr>
+                                    <th>Marca</th>
+                                    <td>@Model.Marca</td>
+                                </tr>
+                                <tr>
+                                    <th>Color</th>
+                                    <td>@Model.Color</td>
+                                </tr>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <td>
+                                        @if (Model.Usuario != null)
+                                        {
+                                            @Model.Usuario.Nombre
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No asignado</span>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Espacio Ley 7600</th>
+                                    <td>
+                                        @if (Model.UsaEspacioLey7600 == true)
+                                        {
+                                            <span class="badge bg-info">Sí</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">No</span>
+                                        }
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.VehiculoID)
+
+                            <div class="text-center">
+                                <p>Una vez registrada la salida, el vehículo ya no aparecerá en la lista de vehículos actuales del parqueo.</p>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fa fa-sign-out"></i> Confirmar Salida
+                                    </button>
+                                    <a href="@Url.Action("VehiculosActuales", "SeguridadHome")" class="btn btn-secondary">
+                                        <i class="fa fa-times"></i> Cancelar
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Formulario para ingresar placa directamente si no hay vehículo seleccionado -->
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                @if (ViewBag.MensajeError != null)
+                {
+                    <div class="alert alert-danger mb-4">
+                        <strong>Error:</strong> @ViewBag.MensajeError
+                    </div>
+                }
+
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Registrar Salida por Número de Placa</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <p><i class="fa fa-info-circle"></i> Ingrese el número de placa del vehículo para registrar su salida del parqueo.</p>
+                        </div>
+
+                        @using (Html.BeginForm("RegistrarSalidaPorPlaca", "SeguridadHome", FormMethod.Post, new { @class = "mb-4" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group mb-3">
+                                <label for="numeroPlaca" class="form-label">Número de Placa:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="numeroPlaca" name="numeroPlaca"
+                                           placeholder="Ejemplo: ABC-123 o 123-456" required
+                                           value="@(ViewBag.NumeroPlaca != null ? ViewBag.NumeroPlaca : "")" />
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fa fa-sign-out"></i> Registrar Salida
+                                    </button>
+                                </div>
+                                <div class="form-text">Ingrese el número de placa completo del vehículo (formato ABC-123 o 123-456).</div>
+                                <div id="placaError" class="text-danger" style="display: none;"></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Convertir el input de placa a mayúsculas
+            $('#numeroPlaca').keyup(function () {
+                this.value = this.value.toUpperCase();
+            });
+
+            // Función para validar el formato de la placa
+            function validateLicensePlate(plate) {
+                // Formato tipo letras-números (ABC-123)
+                var letterNumberFormat = /^[A-Z]{3}-[0-9]{3,4}$/;
+
+                // Formato tipo números-números (123-456)
+                var numberNumberFormat = /^[0-9]{3}-[0-9]{3}$/;
+
+                return letterNumberFormat.test(plate) || numberNumberFormat.test(plate);
+            }
+
+            // Formatear la placa (ejemplo: ABC-123 o 123-456)
+            $('#numeroPlaca').on('input', function () {
+                var val = this.value;
+
+                // Eliminar caracteres no válidos
+                val = val.replace(/[^A-Z0-9\-]/g, '');
+
+                // Si ya hay un guión, asegurarse de que solo haya uno
+                if (val.indexOf('-') !== -1) {
+                    var parts = val.split('-');
+                    if (parts.length > 2) {
+                        val = parts[0] + '-' + parts.slice(1).join('');
+                    }
+                }
+                // Si no hay guión y ya hay 3 caracteres, agregar automáticamente
+                else if (val.length === 3) {
+                    val = val + '-';
+                }
+
+                this.value = val;
+            });
+
+            // Validar el formato de la placa antes de enviar el formulario
+            $('form').submit(function (e) {
+                var placa = $('#numeroPlaca').val();
+                var errorElement = $('#placaError');
+
+                if (placa && !validateLicensePlate(placa)) {
+                    errorElement.text('La placa debe tener formato ABC-123 (tres letras, guión, números) o 123-456 (tres números, guión, tres números)').show();
+                    e.preventDefault();
+                    return false;
+                }
+
+                return true;
+            });
+        });
+    </script>
+}
