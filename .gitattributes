@@ -1,0 +1,75 @@
+###############################################################################
+# Normalización de finales de línea:
+# Asegura que los archivos de texto usen el final de línea correcto en cada OS.
+###############################################################################
+* text=auto
+
+###############################################################################
+# Configuración de diff para archivos C#
+#
+# Esta opción asigna un controlador de diff específico para archivos .cs, lo que
+# mejora la visualización de cambios en la línea de comandos.
+# Descomenta la siguiente línea si deseas activarlo:
+###############################################################################
+#*.cs diff=csharp
+
+###############################################################################
+# Configuración de merge para archivos de proyecto y solución.
+#
+# Al fusionar desde la línea de comandos, estos archivos pueden recibir marcadores
+# de conflicto. Si prefieres tratarlos como binarios para forzar la intervención
+# manual en cada conflicto, descomenta las siguientes líneas:
+###############################################################################
+#*.sln       merge=binary
+#*.csproj    merge=binary
+#*.vbproj    merge=binary
+#*.vcxproj   merge=binary
+#*.vcproj    merge=binary
+#*.dbproj    merge=binary
+#*.fsproj    merge=binary
+#*.lsproj    merge=binary
+#*.wixproj   merge=binary
+#*.modelproj merge=binary
+#*.sqlproj   merge=binary
+#*.wwaproj   merge=binary
+
+###############################################################################
+# Configuración de diff para archivos web (HTML, CSS, JavaScript)
+#
+# Estos archivos, siendo de texto, se benefician de un diff normal.
+###############################################################################
+*.html diff
+*.css  diff
+*.js   diff
+
+###############################################################################
+# Archivos ASP.NET y Entity Framework:
+#
+# Se marcan como archivos de texto para asegurar la correcta normalización
+# y evitar conflictos en archivos generados automáticamente, como los de EF.
+###############################################################################
+*.edmx         text
+*.edmx.diagram text
+web.config     text
+app.config     text
+
+###############################################################################
+# Archivos de imagen:
+#
+# Por defecto, Git trata los archivos de imagen como binarios, evitando diffs línea a línea.
+# Descomenta las siguientes líneas si necesitas reglas específicas:
+###############################################################################
+#*.jpg   binary
+#*.jpeg  binary
+#*.png   binary
+#*.gif   binary
+
+###############################################################################
+# Configuración para documentos y PDF (opcional):
+#
+# Permite convertir archivos binarios a texto para facilitar la comparación desde
+# la línea de comandos. Descomenta si lo requieres.
+###############################################################################
+#*.doc   diff=astextplain
+#*.docx  diff=astextplain
+#*.pdf   diff=astextplain
