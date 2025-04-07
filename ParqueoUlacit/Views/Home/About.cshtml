@@ -1,9 +1,129 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Acerca de";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <p>Use this area to provide additional information.</p>
-</main>
+<div class="about-section py-5">
+    <div class="container">
+        <!-- Encabezado de la página -->
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title mb-3">Acerca de ParqueoULACIT</h2>
+                <div class="section-divider mx-auto"></div>
+                <p class="lead text-muted mt-4">Una solución innovadora para la gestión eficiente de los espacios de parqueo en nuestro campus universitario.</p>
+            </div>
+        </div>
+
+        <!-- Sección de información sobre ULACIT -->
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="about-img-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Universidad_Latinoamericana_de_Ciencia_y_Tecnolog%C3%ADa_%28ULACIT%29%2C_Costa_Rica.jpg" alt="Campus ULACIT" class="img-fluid rounded shadow-sm">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h3 class="mb-4">Sobre la Universidad ULACIT</h3>
+                <p>La Universidad Latinoamericana de Ciencia y Tecnología (ULACIT) es una institución de educación superior privada, fundada en 1987 y reconocida por su excelencia académica e innovación. Hemos sido catalogados como la universidad privada número uno en Costa Rica según el Ranking QS Latinoamérica.</p>
+                <p>En ULACIT nos dedicamos a preparar profesionales con una visión global y espíritu emprendedor, comprometidos con el desarrollo sostenible y la excelencia en sus campos de especialización.</p>
+                <div class="d-flex align-items-center mt-4">
+                    <div class="stat-item me-4">
+                        <h4 class="stat-number">+30</h4>
+                        <p class="stat-text">Años de experiencia</p>
+                    </div>
+                    <div class="stat-item me-4">
+                        <h4 class="stat-number">+5000</h4>
+                        <p class="stat-text">Estudiantes</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4 class="stat-number">+25</h4>
+                        <p class="stat-text">Carreras</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de información sobre el sistema de parqueos -->
+        <div class="row align-items-center mb-5 flex-lg-row-reverse">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="about-img-container">
+                    <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Parqueo ULACIT" class="img-fluid rounded shadow-sm">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h3 class="mb-4">Nuestro Sistema de Parqueos</h3>
+                <p>En ULACIT entendemos los desafíos que enfrentan nuestros estudiantes y personal al buscar estacionamiento en una zona urbana. Por ello, hemos implementado ParqueoULACIT, una solución tecnológica moderna que optimiza la gestión de nuestros espacios de estacionamiento.</p>
+                <p>Contamos con múltiples instalaciones de parqueo distribuidas estratégicamente alrededor del campus, con capacidad para más de 300 vehículos, implementando tecnología de punta para garantizar seguridad y eficiencia.</p>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-3">
+                        <div class="feature-item d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <span>Seguridad 24/7</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="feature-item d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <span>Monitoreo en tiempo real</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de misión y visión -->
+        <div class="row mb-5">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <div class="mission-box p-4 h-100">
+                    <div class="icon-wrapper mb-3">
+                        <i class="bi bi-bullseye fs-2"></i>
+                    </div>
+                    <h3 class="mb-3">Nuestra Misión</h3>
+                    <p>Brindar a la comunidad universitaria de ULACIT un sistema de parqueo eficiente, seguro y accesible, que contribuya a mejorar la experiencia de todos los usuarios mediante el uso de tecnología innovadora y prácticas sostenibles.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="vision-box p-4 h-100">
+                    <div class="icon-wrapper mb-3">
+                        <i class="bi bi-eye fs-2"></i>
+                    </div>
+                    <h3 class="mb-3">Nuestra Visión</h3>
+                    <p>Ser reconocidos como un modelo de referencia en la gestión de estacionamientos universitarios en Costa Rica, destacando por nuestra innovación, eficiencia y compromiso con la sostenibilidad ambiental y la satisfacción de nuestros usuarios.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección del equipo -->
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h3 class="mb-5">Nuestro Equipo de Desarrollo</h3>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="team-member text-center">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Desarrollador" class="team-img mb-3">
+                    <h5 class="mb-1">Alejandro Morales</h5>
+                    <p class="text-muted small">Lead Developer</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="team-member text-center">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Diseñador" class="team-img mb-3">
+                    <h5 class="mb-1">Gabriela Jiménez</h5>
+                    <p class="text-muted small">UI/UX Designer</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="team-member text-center">
+                    <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Project Manager" class="team-img mb-3">
+                    <h5 class="mb-1">Carlos Rodríguez</h5>
+                    <p class="text-muted small">Project Manager</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="team-member text-center">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="QA Engineer" class="team-img mb-3">
+                    <h5 class="mb-1">Lucía Fernández</h5>
+                    <p class="text-muted small">QA Engineer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
