@@ -156,7 +156,7 @@
     <Compile Include="Models\BitacoraParqueo.cs">
       <DependentUpon>Base de Datos.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\IntentosIngresoFallido.cs">
+    <Compile Include="Models\IntentosIngresoFallidos.cs">
       <DependentUpon>Base de Datos.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Parqueo.cs">

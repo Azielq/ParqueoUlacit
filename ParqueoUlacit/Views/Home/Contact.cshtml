@@ -1,19 +1,131 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contacto";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
+<div class="contact-section py-5">
+    <div class="container">
+        <!-- Encabezado -->
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title mb-3">Contáctenos</h2>
+                <div class="section-divider mx-auto"></div>
+                <p class="lead text-muted mt-4">Estamos aquí para responder cualquier consulta sobre nuestro sistema de parqueo.</p>
+            </div>
+        </div>
 
-    <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
-</main>
+        <div class="row">
+            <!-- Información de contacto -->
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="contact-info-card p-4 h-100">
+                    <h3 class="mb-4">Información de Contacto</h3>
+
+                    <div class="contact-item d-flex align-items-start mb-4">
+                        <div class="icon-wrapper me-3">
+                            <i class="bi bi-geo-alt-fill fs-4"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Dirección</h5>
+                            <p class="mb-0">Barrio Tournón, San José, Costa Rica</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item d-flex align-items-start mb-4">
+                        <div class="icon-wrapper me-3">
+                            <i class="bi bi-telephone-fill fs-4"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Teléfono</h5>
+                            <p class="mb-0">(506) 2523-4000</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item d-flex align-items-start mb-4">
+                        <div class="icon-wrapper me-3">
+                            <i class="bi bi-envelope-fill fs-4"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Email</h5>
+                            <p class="mb-0">
+                                <a href="mailto:soporte@parqueoulacit.ac.cr" class="text-decoration-none">soporte@parqueoulacit.ac.cr</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item d-flex align-items-start">
+                        <div class="icon-wrapper me-3">
+                            <i class="bi bi-clock-fill fs-4"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Horario de Atención</h5>
+                            <p class="mb-0">Lunes a Viernes: 8:00 AM - 6:00 PM<br>Sábados: 8:00 AM - 12:00 PM</p>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <h5 class="mb-3">Síguenos</h5>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/ulacit" target="_blank" class="social-link me-2" aria-label="Facebook">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="https://www.instagram.com/ulacit" target="_blank" class="social-link me-2" aria-label="Instagram">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="https://twitter.com/ULACIT" target="_blank" class="social-link me-2" aria-label="Twitter">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/school/ulacit/" target="_blank" class="social-link" aria-label="LinkedIn">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario de contacto -->
+            <div class="col-lg-7">
+                <div class="contact-form-card p-4">
+                    <h3 class="mb-4">Envíenos un Mensaje</h3>
+
+                    <form id="contactForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control" id="name" placeholder="Su nombre" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="email" placeholder="correo@ejemplo.com" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Asunto</label>
+                            <input type="text" class="form-control" id="subject" placeholder="Asunto de su mensaje" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="message" class="form-label">Mensaje</label>
+                            <textarea class="form-control" id="message" rows="5" placeholder="Escriba su mensaje aquí..." required></textarea>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary px-4 py-2">
+                                Enviar Mensaje <i class="bi bi-send ms-1"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mapa -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.946754385459!2d-84.09153428521633!3d9.939942792893634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0e35cd6efe0c7%3A0xb7bce244c572a999!2sULACIT!5e0!3m2!1ses!2scr!4v1650647734099!5m2!1ses!2scr"
+                            width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
