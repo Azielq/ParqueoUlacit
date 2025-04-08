@@ -130,6 +130,7 @@
     <Compile Include="Controllers\AdministrativoHomeController.cs" />
     <Compile Include="Controllers\EstudianteHomeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IntentosIngresoFallidos.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ParqueoController.cs" />
     <Compile Include="Controllers\SeguridadHomeController.cs" />

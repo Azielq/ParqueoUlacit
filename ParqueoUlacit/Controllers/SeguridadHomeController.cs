@@ -187,7 +187,7 @@ namespace ParqueoUlacit.Controllers
                 .Where(v => v.ParqueoID == parqueoID)
                 .ToList();
 
-            return View(vehiculos);
+            return View(vehiculos); 
         }
 
         /* Parte del controlador */
