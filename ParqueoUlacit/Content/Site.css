@@ -461,3 +461,733 @@ hr {
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
+
+/* Estilos para el Panel de Administración */
+body {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.admin-dashboard {
+    padding: 80px 0;
+    width: 100%;
+}
+
+/* Estilos para el título llamativo */
+.header-container {
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.title-wrapper {
+    position: relative;
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.admin-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #333;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #333 30%, #777 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeInDown 1s ease-out;
+    position: relative;
+}
+
+    .admin-title span {
+        position: relative;
+        color: #000;
+        -webkit-text-fill-color: #000;
+        display: inline-block;
+    }
+
+        .admin-title span::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 10px;
+            width: 100%;
+            height: 10px;
+            background-color: rgba(0,0,0,0.1);
+            z-index: -1;
+        }
+
+.admin-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    animation: fadeInUp 1s ease-out 0.3s forwards;
+    opacity: 0;
+}
+
+.admin-divider {
+    width: 100px;
+    height: 5px;
+    background: linear-gradient(to right, #333, transparent);
+    margin: 20px auto;
+    border-radius: 2px;
+    animation: growWidth 1.5s ease-out;
+}
+
+/* Tarjetas de características */
+.feature-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent 30%, rgba(240, 240, 240, 0.5));
+        z-index: -1;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-15px) scale(1.03);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+.feature-icon {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: #333;
+    background: linear-gradient(165deg, #f5f5f5, #ffffff);
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.5s ease;
+}
+
+.feature-card:hover .feature-icon {
+    color: #000;
+    font-size: 4.2rem;
+}
+
+.feature-content {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+    .feature-content h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+    }
+
+.feature-card:hover .feature-content h3 {
+    transform: translateX(8px);
+}
+
+.feature-content p {
+    color: #666;
+    margin-bottom: 25px;
+    flex-grow: 1;
+}
+
+/* Botón con animación pulse */
+.pulse-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 15px 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+    .pulse-button span {
+        position: relative;
+        z-index: 1;
+        transition: all 0.4s ease;
+    }
+
+    .pulse-button i {
+        margin-left: 10px;
+        position: relative;
+        z-index: 1;
+        transition: all 0.4s ease;
+    }
+
+    .pulse-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #333, #000);
+        transition: all 0.4s ease;
+        z-index: 0;
+    }
+
+    .pulse-button::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        z-index: 0;
+    }
+
+    .pulse-button:hover {
+        color: white;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+        .pulse-button:hover::before {
+            background: linear-gradient(45deg, #000, #333);
+        }
+
+        .pulse-button:hover::after {
+            animation: pulse 0.8s ease-out;
+        }
+
+        .pulse-button:hover i {
+            transform: translateX(5px);
+        }
+
+/* Animaciones */
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+        width: 5px;
+        height: 5px;
+    }
+
+    100% {
+        opacity: 0;
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes growWidth {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100px;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 991px) {
+    .admin-dashboard {
+        padding: 60px 0;
+    }
+
+    .admin-title {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .admin-dashboard {
+        padding: 40px 0;
+    }
+
+    .admin-title {
+        font-size: 2.2rem;
+    }
+
+    .feature-icon {
+        height: 120px;
+        font-size: 3.5rem;
+    }
+
+    .pulse-button {
+        padding: 12px 25px;
+    }
+}
+
+/* Estilos para la página de inicio */
+.home-section {
+    padding-bottom: 60px;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Banner principal */
+.hero-banner {
+    padding: 70px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    margin-bottom: 60px;
+    width: 100%;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #333;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    animation: fadeInDown 1s ease-out;
+}
+
+    .hero-title span {
+        position: relative;
+        color: #000;
+        display: inline-block;
+    }
+
+        .hero-title span::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 5px;
+            width: 100%;
+            height: 10px;
+            background-color: rgba(0,0,0,0.1);
+            z-index: -1;
+        }
+
+.hero-text {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+    animation: fadeInUp 1s ease-out 0.3s forwards;
+}
+
+.hero-actions {
+    animation: fadeInUp 1s ease-out 0.5s forwards;
+}
+
+.hero-image-container {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    height: 350px;
+    animation: fadeInRight 1s ease-out;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.hero-image-container:hover .hero-image {
+    transform: scale(1.05);
+}
+
+/* Sección de características */
+.features-section {
+    padding: 60px 0;
+    background-color: #fff;
+    margin-bottom: 60px;
+    width: 100%;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.section-divider {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #333, #999);
+    margin-bottom: 20px;
+    border-radius: 2px;
+}
+
+.feature-box {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+    .feature-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+.feature-icon-container {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.feature-box h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.feature-box p {
+    color: #666;
+    margin-bottom: 0;
+}
+
+/* Sección de información */
+.info-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    margin-bottom: 60px;
+    width: 100%;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.info-image-container {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    height: 400px;
+}
+
+.info-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.info-image-container:hover .info-image {
+    transform: scale(1.05);
+}
+
+.info-title {
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.info-divider {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(to right, #333, #999);
+    margin-bottom: 20px;
+    border-radius: 2px;
+}
+
+.info-text {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .info-list li {
+        margin-bottom: 12px;
+        padding-left: 30px;
+        position: relative;
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+        .info-list li i {
+            position: absolute;
+            left: 0;
+            top: 5px;
+            color: #333;
+        }
+
+/* Sección de llamada a la acción */
+.cta-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #f1f1f1 0%, #e5e5e5 100%);
+    border-radius: 15px;
+    margin: 0 15px 60px 15px;
+}
+
+.cta-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.cta-text {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.cta-buttons {
+    margin-top: 20px;
+}
+
+/* Animaciones adicionales */
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsividad */
+@media (max-width: 991px) {
+    .hero-title {
+        font-size: 2.8rem;
+    }
+
+    .cta-section {
+        padding: 60px 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero-banner {
+        padding: 50px 0;
+    }
+
+    .hero-title {
+        font-size: 2.3rem;
+    }
+
+    .features-section, .info-section {
+        padding: 40px 0;
+    }
+
+    .info-title, .cta-title {
+        font-size: 2rem;
+    }
+}
+
+/* Botón con animación pulse inverso */
+.pulse-button-inverse {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    color: #333;
+    border: 2px solid #333;
+    border-radius: 50px;
+    padding: 15px 30px;
+    margin-left: .75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+    .pulse-button-inverse span {
+        position: relative;
+        z-index: 1;
+        transition: all 0.4s ease;
+    }
+
+    .pulse-button-inverse i {
+        margin-left: 10px;
+        position: relative;
+        z-index: 1;
+        transition: all 0.4s ease;
+    }
+
+    .pulse-button-inverse::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        transition: all 0.4s ease;
+        z-index: 0;
+    }
+
+    .pulse-button-inverse::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        z-index: 0;
+    }
+
+    .pulse-button-inverse:hover {
+        color: white;
+        border-color: #000;
+        background-color: #333;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+        .pulse-button-inverse:hover::before {
+            background: #000;
+        }
+
+        .pulse-button-inverse:hover::after {
+            animation: pulse 0.8s ease-out;
+        }
+
+        .pulse-button-inverse:hover i {
+            transform: translateX(5px);
+        }
+
+/* Ajuste para espacio entre botones en la sección CTA */
+.cta-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+@media (max-width: 576px) {
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pulse-button-inverse {
+        margin-left: 0;
+        margin-top: 15px;
+    }
+}
+
+/* Estilos para los botones de navegación */
+.nav-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.admin-button, .login-button, .logout-button {
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.admin-button {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #333;
+    font-weight: 600;
+}
+
+    .admin-button:hover {
+        background-color: #333;
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+.login-button {
+    background-color: rgba(51, 51, 51, 0.05);
+    color: #333;
+    font-weight: 600;
+}
+
+    .login-button:hover {
+        background-color: rgba(51, 51, 51, 0.1);
+        color: #000;
+        transform: translateY(-2px);
+    }
+
+.logout-button {
+    background-color: rgba(214, 48, 49, 0.05);
+    color: #d63031;
+}
+
+    .logout-button:hover {
+        background-color: rgba(214, 48, 49, 0.1);
+        color: #ff4d4d;
+        transform: translateY(-2px);
+    }

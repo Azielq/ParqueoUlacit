@@ -21,15 +21,35 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li class="ms-auto">
-                        <a href="@Url.Action("Login", "Login")" class="nav-link d-flex align-items-center">
-                            <i class="bi bi-box-arrow-right me-1"></i>
-                        </a>
-                    </li>
+                    <li class="nav-item">@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
+
+                <!-- Botones de sesión y admin en un contenedor separado -->
+                <div class="nav-buttons">
+                    @if (Session["UsuarioId"] != null)
+                    {
+                        <!-- Botón de administrador -->
+                        if (Session["UsuarioId"].ToString() == "1")
+                        {
+                            <a href="@Url.Action("Index", "AdminHome")" class="admin-button me-3">
+                                <i class="bi bi-speedometer2 me-1"></i>Panel Admin
+                            </a>
+                        }
+                        <!-- Botón de cierre de sesión -->
+                        <a href="@Url.Action("Logout", "Login")" class="logout-button">
+                            <i class="bi bi-box-arrow-right me-1"></i>Cerrar Sesión
+                        </a>
+                    }
+                    else
+                    {
+                        <!-- Botón de inicio de sesión -->
+                        <a href="@Url.Action("Login", "Login")" class="login-button">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión
+                        </a>
+                    }
+                </div>
             </div>
         </div>
     </nav>
@@ -87,16 +107,16 @@
                 <div class="col-lg-3">
                     <h5 class="footer-heading">Síguenos</h5>
                     <div class="social-links">
-                        <a href="https://www.facebook.com/ulacit" target="_blank" class="social-link" aria-label="Facebook">
+                        <a href="https://www.facebook.com/ulacitcostarica?locale=es_LA" target="_blank" class="social-link" aria-label="Facebook">
                             <i class="bi bi-facebook"></i>
                         </a>
-                        <a href="https://www.instagram.com/ulacit" target="_blank" class="social-link" aria-label="Instagram">
+                        <a href="https://www.instagram.com/ulacitcr/?hl=en" target="_blank" class="social-link" aria-label="Instagram">
                             <i class="bi bi-instagram"></i>
                         </a>
-                        <a href="https://twitter.com/ULACIT" target="_blank" class="social-link" aria-label="Twitter">
+                        <a href="https://x.com/ulacitcostarica" target="_blank" class="social-link" aria-label="Twitter">
                             <i class="bi bi-twitter-x"></i>
                         </a>
-                        <a href="https://www.linkedin.com/school/ulacit/" target="_blank" class="social-link" aria-label="LinkedIn">
+                        <a href="https://www.linkedin.com/school/ulacitcostarica/posts/?feedView=all" target="_blank" class="social-link" aria-label="LinkedIn">
                             <i class="bi bi-linkedin"></i>
                         </a>
                     </div>
