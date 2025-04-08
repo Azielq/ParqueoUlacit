@@ -58,6 +58,7 @@ h2.text-center {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
     padding: 35px;
     margin-bottom: 40px;
+    animation: fadeInUp 0.8s ease-out;
 }
 
 /* Campos del formulario */
@@ -1395,3 +1396,73 @@ form .pulse-button {
         margin-left: 10px;
     }
 
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.form-group {
+    animation: slideInLeft 0.8s ease-out;
+}
+
+.text-danger {
+    color: #d63031; /* Color acorde a tu estilo */
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+/* Opcional: si deseas resaltar el campo inválido */
+input.is-invalid,
+select.is-invalid {
+    border: 1px solid #d63031;
+    box-shadow: none;
+}
+
+/* Contenedor personalizado para errores */
+.custom-alert {
+    background-color: #ffe6e6; /* Fondo sutil en tono rojo claro */
+    border: 1px solid #ff9999; /* Borde acorde */
+    color: #d63031; /* Color de texto de error */
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Animación para la aparición del error */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilo para inputs y selects en estado de error */
+input.is-invalid,
+select.is-invalid {
+    border: 1px solid #d63031;
+    background-color: #fff8f8;
+    box-shadow: none;
+    transition: all 0.3s;
+}
+
+/* Opcional: estilo para el mensaje inline (ValidationMessageFor) */
+.text-danger {
+    color: #d63031;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}

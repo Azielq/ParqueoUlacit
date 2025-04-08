@@ -4,115 +4,115 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
+<div class="container my-5">
+    <!-- Título de la sección -->
     <div class="row mb-4">
         <div class="col">
-            <h2>Crear Nuevo Vehículo</h2>
-            <p>Complete la información para registrar un nuevo vehículo en el sistema.</p>
+            <h2 class="section-title">Crear Nuevo Vehículo</h2>
+            <div class="section-divider"></div>
+            <p class="text-muted mt-3">Complete la información para registrar un nuevo vehículo en el sistema.</p>
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Información del Vehículo</h4>
+    <!-- Contenedor del formulario -->
+    <div class="form-container">
+        <div class="form-header mb-4">
+            <h4 class="mb-0"><i class="fa fa-car me-2"></i>Información del Vehículo</h4>
         </div>
-        <div class="card-body">
-            @using (Html.BeginForm("Create", "Vehiculo", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
+        @using (Html.BeginForm("Create", "Vehiculo", FormMethod.Post, new { novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Marca, "Marca", new { @class = "form-label" })
-                            @Html.TextBoxFor(model => model.Marca, new { @class = "form-control", placeholder = "Ingrese la marca del vehículo", required = "required" })
-                            @Html.ValidationMessageFor(model => model.Marca, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Color, "Color", new { @class = "form-label" })
-                            @Html.TextBoxFor(model => model.Color, new { @class = "form-control", placeholder = "Ingrese el color del vehículo", required = "required" })
-                            @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
-                        </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Marca, "Marca", new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Marca, new { @class = "form-control", placeholder = "Ingrese la marca del vehículo", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Marca, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NumeroPlaca, "Número de Placa", new { @class = "form-label" })
-                            @Html.TextBoxFor(model => model.NumeroPlaca, new { @class = "form-control", placeholder = "Ejemplo: ABC-123 o 123-456", required = "required" })
-                            @Html.ValidationMessageFor(model => model.NumeroPlaca, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Tipo, "Tipo de Vehículo", new { @class = "form-label" })
-                            @Html.DropDownListFor(model => model.Tipo,
-                                              new List<SelectListItem> {
-                                        new SelectListItem { Text = "Automóvil", Value = "Automovil" },
-                                        new SelectListItem { Text = "Moto", Value = "Moto" }
-                      },
-                                              "Seleccione Tipo de Vehículo", new { @class = "form-control", required = "required" })
-                            @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
-                        </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Color, "Color", new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Color, new { @class = "form-control", placeholder = "Ingrese el color del vehículo", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
                     </div>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.UsuarioID, "Propietario", new { @class = "form-label" })
-                            @Html.DropDownListFor(model => model.UsuarioID, (SelectList)ViewBag.UsuarioID, "Seleccione Usuario", new { @class = "form-control", required = "required" })
-                            @Html.ValidationMessageFor(model => model.UsuarioID, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Estado, "Estado", new { @class = "form-label" })
-                            @Html.DropDownListFor(model => model.Estado,
-                                              new List<SelectListItem> {
-                                        new SelectListItem { Text = "Activo", Value = "Activo" },
-                                        new SelectListItem { Text = "Inactivo", Value = "Inactivo" },
-                                        new SelectListItem { Text = "Pendiente", Value = "Pendiente" }
-                      },
-                                              "Seleccione Estado", new { @class = "form-control", required = "required" })
-                            @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-                        </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NumeroPlaca, "Número de Placa", new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.NumeroPlaca, new { @class = "form-control", placeholder = "Ejemplo: ABC-123 o 123-456", required = "required", id = "NumeroPlaca" })
+                        @Html.ValidationMessageFor(model => model.NumeroPlaca, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.UsaEspacioLey7600)
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="UsaEspacioLey7600" value="true" @(Model.UsaEspacioLey7600 == true ? "checked" : "") />
-                            <input type="hidden" name="UsaEspacioLey7600" value="false" />
-                        </label>
-                    </div>
-                    @Html.ValidationMessageFor(model => model.UsaEspacioLey7600)
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col">
-                        <div class="d-flex justify-content-between">
-                            <a href="@Url.Action("Index", "AdminHome")" class="btn btn-secondary">
-                                <i class="fa fa-arrow-left"></i> Volver al Panel
-                            </a>
-                            <button type="submit" class="btn btn-success">
-                                <i class="fa fa-car"></i> Guardar Vehículo
-                            </button>
-                        </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Tipo, "Tipo de Vehículo", new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Tipo,
+                            new List<SelectListItem> {
+                                new SelectListItem { Text = "Automóvil", Value = "Automovil" },
+                                new SelectListItem { Text = "Moto", Value = "Moto" }
+                            },
+                            "Seleccione Tipo de Vehículo", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            }
-        </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UsuarioID, "Propietario", new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.UsuarioID, (SelectList)ViewBag.UsuarioID, "Seleccione Usuario", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.UsuarioID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Estado, "Estado", new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Estado,
+                            new List<SelectListItem> {
+                                new SelectListItem { Text = "Activo", Value = "Activo" },
+                                new SelectListItem { Text = "Inactivo", Value = "Inactivo" },
+                                new SelectListItem { Text = "Pendiente", Value = "Pendiente" }
+                            },
+                            "Seleccione Estado", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UsaEspacioLey7600)
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="UsaEspacioLey7600" value="true" @(Model.UsaEspacioLey7600 == true ? "checked" : "") />
+                        <input type="hidden" name="UsaEspacioLey7600" value="false" />
+                    </label>
+                </div>
+                @Html.ValidationMessageFor(model => model.UsaEspacioLey7600)
+            </div>
+
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="d-flex justify-content-between">
+                        <a href="@Url.Action("Index", "AdminHome")" class="pulse-button-inverse">
+                            <span><i class="fa fa-arrow-left"></i> Volver al Panel</span>
+                        </a>
+                        <button type="submit" class="pulse-button">
+                            <span><i class="fa fa-car"></i> Guardar Vehículo</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>
+
+
 
 @section Scripts {
     <script>

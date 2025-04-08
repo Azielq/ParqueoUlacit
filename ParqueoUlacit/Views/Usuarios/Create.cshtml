@@ -85,37 +85,3 @@
     </div>
 </div>
 
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            // Prevenir la validación automática del navegador
-            $('form').attr('novalidate', 'novalidate');
-
-            // Manejar la validación cuando se envía el formulario
-            $('form').on('submit', function (e) {
-                var form = $(this);
-
-                if (this.checkValidity() === false) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    // Aplicar clases de validación solo a campos inválidos
-                    $.each(form.find(':input:visible'), function (index, el) {
-                        if (!el.checkValidity()) {
-                            $(el).addClass('is-invalid');
-                        } else {
-                            $(el).removeClass('is-invalid');
-                        }
-                    });
-                }
-
-                form.addClass('was-validated');
-            });
-
-            // Limpiar clase de error al interactuar con un campo
-            $('.form-control').on('input', function () {
-                $(this).removeClass('is-invalid');
-            });
-        });
-    </script>
-}
