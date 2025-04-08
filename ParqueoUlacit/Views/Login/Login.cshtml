@@ -11,31 +11,67 @@
                 <h2 class="login-title">INICIAR <span>SESIÓN</span></h2>
                 <div class="login-underline"></div>
             </div>
-
             @if (!ViewData.ModelState.IsValid)
             {
                 <div class="alert alert-danger">
                     @Html.ValidationSummary()
                 </div>
             }
-
             <div class="form-container">
                 <!-- Formulario de inicio de sesión -->
-                <form method="post" action="@Url.Action("Login", "Login")">
+                <form method="post" action="@Url.Action("Login", "Login")" novalidate>
                     <!-- Campo para el correo electrónico -->
                     <div class="mb-4">
                         <label class="form-label">Correo Electrónico</label>
-                        <input type="email" name="Correo" class="form-control" required />
+                        <input type="email" name="Correo" class="form-control no-validation" placeholder="ejemplo@dominio.com" required />
                     </div>
                     <!-- Campo para la contraseña -->
                     <div class="mb-4">
                         <label class="form-label">Contraseña</label>
-                        <input type="password" name="Clave" class="form-control" required />
+                        <input type="password" name="Clave" class="form-control no-validation" placeholder="Ingrese su contraseña" required />
                     </div>
                     <!-- Botón de ingreso -->
-                    <button type="submit" class="btn btn-primary w-100 mt-3">Ingresar</button>
+                    <button type="submit" class="pulse-button w-100 mt-4">
+                        <span>Iniciar Sesión</span>
+                        <i class="bi bi-box-arrow-in-right"></i>
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Prevenir la validación automática del navegador
+            $('form').attr('novalidate', 'novalidate');
+
+            // Manejar la validación cuando se envía el formulario
+            $('form').on('submit', function (e) {
+                var form = $(this);
+
+                if (this.checkValidity() === false) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Aplicar clases de validación solo a campos inválidos
+                    $.each(form.find(':input:visible'), function (index, el) {
+                        if (!el.checkValidity()) {
+                            $(el).addClass('is-invalid');
+                        } else {
+                            $(el).removeClass('is-invalid');
+                        }
+                    });
+                }
+
+                form.addClass('was-validated');
+            });
+
+            // Limpiar clase de error al interactuar con un campo
+            $('.form-control').on('input', function () {
+                $(this).removeClass('is-invalid');
+            });
+        });
+    </script>
+}
