@@ -1466,3 +1466,125 @@ select.is-invalid {
     font-size: 0.85rem;
     margin-top: 0.25rem;
 }
+
+/ /* Ajustes más estrictos para las acciones del formulario */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eaeaea;
+    gap: 15px;
+}
+
+.form-actions .pulse-button,
+.form-actions .pulse-button-inverse {
+    flex: 0 0 auto;
+    width: 200px; /* Ancho fijo exacto para ambos botones */
+    height: 50px; /* Altura fija para ambos */
+    justify-content: center;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    margin: 0; /* Quitar cualquier margen predeterminado */
+}
+
+.form-actions .pulse-button-inverse {
+    margin-left: 0; /* Sobrescribir cualquier margen izquierdo */
+}
+
+    .form-actions .pulse-button span,
+    .form-actions .pulse-button-inverse span {
+        text-align: center;
+        display: inline-block;
+        flex-grow: 1;
+    }
+
+    .form-actions .pulse-button i,
+    .form-actions .pulse-button-inverse i {
+        margin-left: 10px;
+        flex-shrink: 0;
+    }
+
+/* Asegurar que no hay desplazamiento vertical */
+.form-actions .pulse-button,
+.form-actions .pulse-button-inverse,
+.form-actions button[type="submit"] {
+    vertical-align: middle;
+    line-height: 1;
+    position: relative;
+    top: 0;
+}
+
+/* Ajuste para dispositivos móviles */
+@media (max-width: 576px) {
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+        .form-actions .pulse-button,
+        .form-actions .pulse-button-inverse {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .form-actions .pulse-button-inverse {
+            order: 2;
+        }
+
+        .form-actions .pulse-button {
+            order: 1;
+        }
+}
+
+/* Estilos para alinear y uniformizar los botones en form-actions */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eaeaea;
+    gap: 15px;
+    width: 100%;
+}
+
+    .form-actions .pulse-button,
+    .form-actions .pulse-button-inverse {
+        width: 220px;
+        justify-content: center;
+        padding: 15px 25px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        margin: 0;
+    }
+
+        .form-actions .pulse-button span,
+        .form-actions .pulse-button-inverse span {
+            flex: 1;
+            text-align: center;
+        }
+
+        .form-actions .pulse-button i,
+        .form-actions .pulse-button-inverse i {
+            margin-left: 10px;
+            margin-right: 0;
+            font-size: 1rem;
+        }
+
+/* Ajuste para dispositivos móviles */
+@media (max-width: 576px) {
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+        .form-actions .pulse-button,
+        .form-actions .pulse-button-inverse {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+}
