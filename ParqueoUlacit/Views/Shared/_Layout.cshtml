@@ -16,15 +16,53 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-light">
         <div class="container">
-            <a href="@Url.Action("Index", "Home")" class="navbar-brand">
-                <i class="bi bi-car-front-fill fs-3"></i>
-            </a>
+            @if (Session["UsuarioID"] != null)
+            {
+                <!-- Cambia la redirección del logo según el rol -->
+                if (Session["RolID"] != null && Session["RolID"].ToString() == "1")
+                {
+                    <a href="@Url.Action("Index", "AdminHome")" class="navbar-brand">
+                        <i class="bi bi-car-front-fill fs-3"></i>
+                    </a>
+                }
+                else if (Session["RolID"] != null && Session["RolID"].ToString() == "2")
+                {
+                    <a href="@Url.Action("Index", "SeguridadHome")" class="navbar-brand">
+                        <i class="bi bi-car-front-fill fs-3"></i>
+                    </a>
+                }
+                else if (Session["RolID"] != null && Session["RolID"].ToString() == "3")
+                {
+                    <a href="@Url.Action("Index", "AdministrativoHome")" class="navbar-brand">
+                        <i class="bi bi-car-front-fill fs-3"></i>
+                    </a>
+                }
+                else if (Session["RolID"] != null && Session["RolID"].ToString() == "4")
+                {
+                    <a href="@Url.Action("Index", "EstudianteHome")" class="navbar-brand">
+                        <i class="bi bi-car-front-fill fs-3"></i>
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+                        <i class="bi bi-car-front-fill fs-3"></i>
+                    </a>
+                }
+            }
+            else
+            {
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+                    <i class="bi bi-car-front-fill fs-3"></i>
+                </a>
+            }
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
+                    
                     <li class="nav-item">@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
@@ -32,7 +70,7 @@
 
                 <!-- Botones de sesión y admin en un contenedor separado -->
                 <div class="nav-buttons">
-                    @if (Session["UsuarioId"] != null)
+                    @if (Session["UsuarioID"] != null)
                     {
                         <!-- Botón de administrador -->
                         if (Session["RolID"] != null && Session["RolID"].ToString() == "1")
@@ -49,6 +87,24 @@
                             <a href="@Url.Action("Index", "SeguridadHome")" class="nav-pulse-button me-3">
                                 <span>Panel Oficial</span>
                                 <i class="bi bi-shield-check"></i>
+                            </a>
+                        }
+
+                        <!-- Botón de Usuario Administrativo -->
+                        if (Session["RolID"] != null && Session["RolID"].ToString() == "3")
+                        {
+                            <a href="@Url.Action("Index", "AdministrativoHome")" class="nav-pulse-button me-3">
+                                <span>Panel Administrativo</span>
+                                <i class="bi bi-person-badge"></i>
+                            </a>
+                        }
+
+                        <!-- Botón de Estudiante -->
+                        if (Session["RolID"] != null && Session["RolID"].ToString() == "4")
+                        {
+                            <a href="@Url.Action("Index", "EstudianteHome")" class="nav-pulse-button me-3">
+                                <span>Panel Estudiante</span>
+                                <i class="bi bi-mortarboard"></i>
                             </a>
                         }
 
@@ -94,7 +150,34 @@
                 <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
                     <h5 class="footer-heading">Enlaces</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="@Url.Action("Index", "Home")" class="text-muted text-decoration-none">Inicio</a></li>
+                        @if (Session["UsuarioID"] != null)
+                        {
+                            <!-- Cambia la redirección del enlace de inicio del footer según el rol -->
+                            if (Session["RolID"] != null && Session["RolID"].ToString() == "1")
+                            {
+                                <li class="mb-2"><a href="@Url.Action("Index", "AdminHome")" class="text-muted text-decoration-none">Inicio</a></li>
+                            }
+                            else if (Session["RolID"] != null && Session["RolID"].ToString() == "2")
+                            {
+                                <li class="mb-2"><a href="@Url.Action("Index", "SeguridadHome")" class="text-muted text-decoration-none">Inicio</a></li>
+                            }
+                            else if (Session["RolID"] != null && Session["RolID"].ToString() == "3")
+                            {
+                                <li class="mb-2"><a href="@Url.Action("Index", "AdministrativoHome")" class="text-muted text-decoration-none">Inicio</a></li>
+                            }
+                            else if (Session["RolID"] != null && Session["RolID"].ToString() == "4")
+                            {
+                                <li class="mb-2"><a href="@Url.Action("Index", "EstudianteHome")" class="text-muted text-decoration-none">Inicio</a></li>
+                            }
+                            else
+                            {
+                                <li class="mb-2"><a href="@Url.Action("Index", "Home")" class="text-muted text-decoration-none">Inicio</a></li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="mb-2"><a href="@Url.Action("Index", "Home")" class="text-muted text-decoration-none">Inicio</a></li>
+                        }
                         <li class="mb-2"><a href="@Url.Action("About", "Home")" class="text-muted text-decoration-none">Acerca de</a></li>
                         <li class="mb-2"><a href="@Url.Action("Contact", "Home")" class="text-muted text-decoration-none">Contacto</a></li>
                         <li><a href="https://www.ulacit.ac.cr/terminos-y-condiciones/" target="_blank" class="text-muted text-decoration-none">Términos y condiciones</a></li>

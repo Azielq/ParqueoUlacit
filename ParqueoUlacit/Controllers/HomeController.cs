@@ -10,10 +10,7 @@ namespace ParqueoUlacit.Controllers
     {
         public ActionResult Index()
         {
-            if (Session["RolID"] == null || (int)Session["RolID"] != 1)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+            
             return View();
         }
 
