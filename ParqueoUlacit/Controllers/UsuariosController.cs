@@ -39,7 +39,7 @@ namespace ParqueoUlacit.Controllers
                 };
 
                 db.Usuarios.Add(nuevoUsuario);
-                db.SaveChanges();
+                    db.SaveChanges();
 
                 return RedirectToAction("Index", "AdminHome");
             }

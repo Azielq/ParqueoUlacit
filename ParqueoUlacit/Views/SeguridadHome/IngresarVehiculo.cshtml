@@ -3,127 +3,205 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Ingreso de Vehículos - @ViewBag.NombreParqueo</h2>
-            <hr />
+<div class="container my-3">
+    <!-- Título de la sección -->
+    <div class="row mb-2">
+        <div class="col">
+            <h2 class="section-title">Ingreso de Vehículos</h2>
+            <div class="section-divider"></div> 
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Verificar Ingreso de Vehículo</h3>
+        <!-- Formulario de ingreso de vehículo -->
+        <div class="col-lg-6 mb-4">
+            <div class="form-container h-100">
+                <div class="form-header mb-4">
+                    <h4 class="mb-0"><i class="bi bi-car-front-fill me-2"></i>Verificar Ingreso de Vehículo</h4>
                 </div>
-                <div class="panel-body">
-                    @using (Html.BeginForm("IngresarVehiculo", "SeguridadHome", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        <div class="form-group">
-                            <label for="numeroPlaca" class="col-md-4 control-label">Número de Placa:</label>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="numeroPlaca" name="numeroPlaca" placeholder="Ejemplo: LEO-100 o 123-456" required
+
+                @using (Html.BeginForm("IngresarVehiculo", "SeguridadHome", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                {
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="numeroPlaca" class="form-label">Número de Placa</label>
+                                <input type="text" class="form-control" id="numeroPlaca" name="numeroPlaca"
+                                       placeholder="Ejemplo: LEO-100 o 123-456" required
                                        value="@(ViewBag.NumeroPlaca != null ? ViewBag.NumeroPlaca : "")" />
-                                <span class="help-block">Ingrese el número de placa del vehículo para verificar si puede ingresar al parqueo.</span>
-                                <div id="placaError" class="text-danger" style="display: none;"></div>
+                                <small class="form-text text-muted">Ingrese el número de placa del vehículo para verificar acceso.</small>
+                                <div id="placaError" class="text-danger mt-2" style="display: none;"></div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="tipoVehiculo" class="col-md-4 control-label">Tipo de Vehículo:</label>
-                            <div class="col-md-8">
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="tipoVehiculo" class="form-label">Tipo de Vehículo</label>
                                 <select class="form-control" id="tipoVehiculo" name="tipoVehiculo" required>
                                     <option value="">Seleccione tipo de vehículo</option>
                                     <option value="Automovil">Automóvil</option>
                                     <option value="Moto">Moto</option>
                                     <option value="Ley7600">Vehículo Ley 7600</option>
                                 </select>
-                                <span class="help-block">Seleccione el tipo de vehículo que va a ingresar.</span>
+                                <small class="form-text text-muted">Seleccione el tipo de vehículo que va a ingresar.</small>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <div class="col-md-offset-4 col-md-8">
-                                <button type="submit" class="btn btn-primary">Verificar Ingreso</button>
-                                <a href="@Url.Action("Index", "SeguridadHome")" class="btn btn-default">Volver</a>
-                            </div>
-                        </div>
-                    }
-                </div>
+                    <div class="form-actions">
+                        <a href="@Url.Action("Index", "SeguridadHome")" class="pulse-button-inverse">
+                            <span>Volver al Panel</span>
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+                        <button type="submit" class="pulse-button">
+                            <span>Verificar Ingreso</span>
+                            <i class="bi bi-check-circle"></i>
+                        </button>
+                    </div>
+                }
             </div>
         </div>
 
-        <div class="col-md-6">
-            @if (ViewBag.ConsultaRealizada == true)
-            {
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Resultado de la Verificación</h3>
+        <!-- Resultados o instrucciones -->
+        <div class="col-lg-6 mb-4">
+            <div class="form-container h-100">
+                @if (ViewBag.ConsultaRealizada == true)
+                {
+                    <div class="form-header mb-4">
+                        <h4 class="mb-0"><i class="bi bi-info-circle-fill me-2"></i>Resultado de la Verificación</h4>
                     </div>
-                    <div class="panel-body text-center">
-                        <h4>Placa: @ViewBag.NumeroPlaca</h4>
 
-                        <div class="semaforo-container" style="margin: 20px auto; width: 200px;">
+                    <div class="text-center">
+                        <h5 class="mb-4 fw-bold">Placa: @ViewBag.NumeroPlaca</h5>
+
+                        <div class="semaforo-container my-4">
                             @if (ViewBag.PuedeIngresar == true)
                             {
-                                <div class="semaforo-luz" style="width: 150px; height: 150px; border-radius: 50%; background-color: #2ecc71; margin: 0 auto; border: 5px solid #27ae60; box-shadow: 0 0 20px #2ecc71;">
+                                <div class="semaforo-luz green-light">
+                                    <i class="bi bi-check-circle-fill"></i>
                                 </div>
-                                <h3 style="color: #2ecc71; margin-top: 10px;">PUEDE INGRESAR</h3>
+                                <h3 class="mt-3 text-success fw-bold">PUEDE INGRESAR</h3>
+
                                 if (ViewBag.EsPrimeraVez == true)
                                 {
-                                    <div class="alert alert-info">
-                                        <strong>¡Primera vez!</strong> El vehículo ha sido registrado en el sistema por primera vez.
+                                    <div class="alert alert-info mt-3 d-flex align-items-center">
+                                        <i class="bi bi-info-circle-fill me-2 fs-4"></i>
+                                        <div><strong>¡Primera vez!</strong> El vehículo ha sido registrado en el sistema por primera vez.</div>
                                     </div>
                                 }
-                                <p>El vehículo ha sido registrado correctamente en el parqueo.</p>
+
+                                <p class="mt-3">El vehículo ha sido registrado correctamente en el parqueo.</p>
                             }
                             else
                             {
-                                <div class="semaforo-luz" style="width: 150px; height: 150px; border-radius: 50%; background-color: #e74c3c; margin: 0 auto; border: 5px solid #c0392b; box-shadow: 0 0 20px #e74c3c;">
+                                <div class="semaforo-luz red-light">
+                                    <i class="bi bi-x-circle-fill"></i>
                                 </div>
-                                <h3 style="color: #e74c3c; margin-top: 10px;">NO PUEDE INGRESAR</h3>
-                                <div class="alert alert-danger">
-                                    <strong>Motivo:</strong> @ViewBag.MensajeError
+                                <h3 class="mt-3 text-danger fw-bold">NO PUEDE INGRESAR</h3>
+
+                                <div class="alert alert-danger mt-3 d-flex align-items-center">
+                                    <i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+                                    <div><strong>Motivo:</strong> @ViewBag.MensajeError</div>
                                 </div>
                             }
                         </div>
                     </div>
-                </div>
-            }
-            else
-            {
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Instrucciones</h3>
+                }
+                else
+                {
+                    <div class="form-header mb-4">
+                        <h4 class="mb-0"><i class="bi bi-question-circle-fill me-2"></i>Instrucciones</h4>
                     </div>
-                    <div class="panel-body">
-                        <div class="alert alert-info">
-                            <p><strong>¿Cómo funciona?</strong></p>
-                            <ul>
-                                <li>Ingrese el número de placa del vehículo y seleccione el tipo de vehículo.</li>
-                                <li>Haga clic en "Verificar Ingreso".</li>
-                                <li>El sistema verificará si el vehículo puede ingresar al parqueo.</li>
-                                <li>Se mostrará un semáforo verde si puede ingresar o rojo si no puede ingresar.</li>
-                                <li>En caso de no poder ingresar, se indicará el motivo.</li>
-                            </ul>
+
+                    <div class="info-box p-4 mb-4">
+                        <h5><i class="bi bi-info-circle me-2"></i>¿Cómo funciona?</h5>
+                        <ul class="mt-3">
+                            <li>Ingrese el número de placa del vehículo y seleccione el tipo de vehículo.</li>
+                            <li>Haga clic en "Verificar Ingreso".</li>
+                            <li>El sistema verificará si el vehículo puede ingresar al parqueo.</li>
+                            <li>Se mostrará un indicador verde si puede ingresar o rojo si no puede ingresar.</li>
+                            <li>En caso de no poder ingresar, se indicará el motivo.</li>
+                        </ul>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-6 text-center">
+                            <div class="light-indicator success">
+                                <i class="bi bi-check-circle-fill"></i>
+                            </div>
+                            <p class="mt-3"><strong>Luz Verde:</strong><br />El vehículo puede ingresar</p>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-6 text-center">
-                                <div style="width: 80px; height: 80px; border-radius: 50%; background-color: #2ecc71; margin: 0 auto; border: 3px solid #27ae60;"></div>
-                                <p style="margin-top: 10px;"><strong>Luz Verde:</strong><br />El vehículo puede ingresar</p>
+                        <div class="col-6 text-center">
+                            <div class="light-indicator danger">
+                                <i class="bi bi-x-circle-fill"></i>
                             </div>
-                            <div class="col-xs-6 text-center">
-                                <div style="width: 80px; height: 80px; border-radius: 50%; background-color: #e74c3c; margin: 0 auto; border: 3px solid #c0392b;"></div>
-                                <p style="margin-top: 10px;"><strong>Luz Roja:</strong><br />El vehículo no puede ingresar</p>
-                            </div>
+                            <p class="mt-3"><strong>Luz Roja:</strong><br />El vehículo no puede ingresar</p>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+    /* Estilos para los indicadores de semáforo */
+    .semaforo-luz {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+        .semaforo-luz i {
+            font-size: 70px;
+        }
+
+    .green-light {
+        background-color: rgba(46, 204, 113, 0.2);
+        border: 5px solid #2ecc71;
+        color: #2ecc71;
+    }
+
+    .red-light {
+        background-color: rgba(231, 76, 60, 0.2);
+        border: 5px solid #e74c3c;
+        color: #e74c3c;
+    }
+
+    /* Indicadores pequeños para la sección de instrucciones */
+    .light-indicator {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .light-indicator i {
+            font-size: 40px;
+        }
+
+        .light-indicator.success {
+            background-color: rgba(46, 204, 113, 0.2);
+            border: 3px solid #2ecc71;
+            color: #2ecc71;
+        }
+
+        .light-indicator.danger {
+            background-color: rgba(231, 76, 60, 0.2);
+            border: 3px solid #e74c3c;
+            color: #e74c3c;
+        }
+</style>
 
 @section Scripts {
     <script>
@@ -170,14 +248,14 @@
                 if (val.length > 5) { // Solo validar cuando haya contenido suficiente
                     if (validateLicensePlate(val)) {
                         errorElement.hide();
-                        $(this).removeClass('has-error').addClass('has-success');
+                        $(this).removeClass('is-invalid').addClass('is-valid');
                     } else {
                         errorElement.text('La placa debe tener formato LEO-100 o 123-456').show();
-                        $(this).removeClass('has-success').addClass('has-error');
+                        $(this).removeClass('is-valid').addClass('is-invalid');
                     }
                 } else {
                     errorElement.hide();
-                    $(this).removeClass('has-success has-error');
+                    $(this).removeClass('is-valid is-invalid');
                 }
             });
 
@@ -190,16 +268,20 @@
 
                 if (!validateLicensePlate(placa)) {
                     errorElement.text('La placa debe tener formato LEO-100 (tres letras, guión, números) o 123-456 (tres números, guión, tres números)').show();
+                    $('#numeroPlaca').removeClass('is-valid').addClass('is-invalid');
                     valid = false;
                 }
 
                 if (!tipoVehiculo) {
+                    $('#tipoVehiculo').addClass('is-invalid');
                     if (!errorElement.is(':visible')) {
                         errorElement.text('Debe seleccionar un tipo de vehículo').show();
                     } else {
                         errorElement.text(errorElement.text() + '. También debe seleccionar un tipo de vehículo').show();
                     }
                     valid = false;
+                } else {
+                    $('#tipoVehiculo').removeClass('is-invalid').addClass('is-valid');
                 }
 
                 if (!valid) {

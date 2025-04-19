@@ -35,13 +35,23 @@
                     @if (Session["UsuarioId"] != null)
                     {
                         <!-- Botón de administrador -->
-                        if (Session["UsuarioId"].ToString() == "1")
+                        if (Session["RolID"] != null && Session["RolID"].ToString() == "1")
                         {
                             <a href="@Url.Action("Index", "AdminHome")" class="nav-pulse-button me-3">
                                 <span>Panel Admin</span>
                                 <i class="bi bi-speedometer2"></i>
                             </a>
                         }
+
+                        <!-- Botón de Oficial de Seguridad -->
+                        if (Session["RolID"] != null && Session["RolID"].ToString() == "2")
+                        {
+                            <a href="@Url.Action("Index", "SeguridadHome")" class="nav-pulse-button me-3">
+                                <span>Panel Oficial</span>
+                                <i class="bi bi-shield-check"></i>
+                            </a>
+                        }
+
                         <!-- Botón de cierre de sesión -->
                         <a href="@Url.Action("Logout", "Login")" class="nav-pulse-button-inverse">
                             <span>Cerrar Sesión</span>

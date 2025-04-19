@@ -4,101 +4,128 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
+<div class="container my-5">
+    <!-- Título de la sección -->
     <div class="row mb-4">
         <div class="col">
-            <h2>Vehículos Actuales en el Parqueo</h2>
-            <p>Listado de vehículos en el parqueo: <strong>@ViewBag.NombreParqueo</strong></p>
-        </div>
-        <div class="col-auto">
-            <a href="@Url.Action("Index", "SeguridadHome")" class="btn btn-secondary">
-                <i class="fa fa-arrow-left"></i> Volver al Panel
-            </a>
+            <h2 class="section-title">Vehículos Actuales en el Parqueo</h2>
+            <div class="section-divider"></div>
+            <p class="text-muted mt-3">Listado de vehículos presentes en el parqueo: <strong>@ViewBag.NombreParqueo</strong></p>
         </div>
     </div>
 
+    <!-- Mensajes de alerta -->
     @if (TempData["Mensaje"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @TempData["Mensaje"]
+        <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
+            <i class="bi bi-check-circle-fill me-2 fs-4"></i>
+            <div>@TempData["Mensaje"]</div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
 
     @if (TempData["Error"] != null)
     {
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            @TempData["Error"]
+        <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+            <div>@TempData["Error"]</div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
 
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Vehículos en el Parqueo</h4>
+    <!-- Contenedor principal -->
+    <div class="form-container">
+        <div class="form-header d-flex justify-content-between align-items-center mb-4">
+            <h4 class="mb-0"><i class="bi bi-car-front-fill me-2"></i>Vehículos en el Parqueo</h4>
+            <a href="@Url.Action("Index", "SeguridadHome")" class="pulse-button-inverse">
+                <span>Volver al Panel</span>
+                <i class="bi bi-arrow-left"></i>
+            </a>
         </div>
-        <div class="card-body">
-            @if (!Model.Any())
-            {
-                <div class="alert alert-info">
-                    No hay vehículos en el parqueo actualmente.
-                </div>
-            }
-            else
-            {
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover" id="tablaVehiculos">
-                        <thead>
-                            <tr>
-                                <th>Placa</th>
-                                <th>Tipo</th>
-                                <th>Marca</th>
-                                <th>Color</th>
-                                <th>Usuario</th>
-                                <th>Ley 7600</th>
-                                <th>Acciones</th>
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info d-flex align-items-center">
+                <i class="bi bi-info-circle-fill me-2 fs-4"></i>
+                <div>No hay vehículos en el parqueo actualmente.</div>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive mt-4">
+                <table class="table" id="tablaVehiculos">
+                    <thead>
+                        <tr class="bg-light">
+                            <th class="rounded-start py-3">Placa</th>
+                            <th class="py-3">Tipo</th>
+                            <th class="py-3">Marca</th>
+                            <th class="py-3">Color</th>
+                            <th class="py-3">Usuario</th>
+                            <th class="py-3">Ley 7600</th>
+                            <th class="rounded-end py-3">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="align-middle border-bottom">
+                                <td class="fw-medium">@item.NumeroPlaca</td>
+                                <td>
+                                    @if (item.Tipo == "Automovil")
+                                    {
+                                        <span><i class="bi bi-car-front me-1"></i> Automóvil</span>
+                                    }
+                                    else if (item.Tipo == "Moto")
+                                    {
+                                        <span><i class="bi bi-bicycle me-1"></i> Moto</span>
+                                    }
+                                    else if (item.Tipo == "Ley7600")
+                                    {
+                                        <span><i class="bi bi-person-wheelchair me-1"></i> Ley 7600</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@item.Tipo</span>
+                                    }
+                                </td>
+                                <td>@item.Marca</td>
+                                <td>@item.Color</td>
+                                <td>
+                                    @if (item.Usuario != null)
+                                    {
+                                        <span><i class="bi bi-person me-1"></i> @item.Usuario.Nombre</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">No asignado</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.UsaEspacioLey7600 == true)
+                                    {
+                                        <span class="badge rounded-pill bg-white border border-info text-info py-2 px-3">
+                                            <i class="bi bi-person-wheelchair me-1"></i>Sí
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge rounded-pill bg-white border border-secondary text-secondary py-2 px-3">
+                                            <i class="bi bi-x-circle me-1"></i>No
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("RegistrarSalida", "SeguridadHome", new { id = item.VehiculoID })" class="pulse-button">
+                                        <span>Registrar Salida</span>
+                                        <i class="bi bi-box-arrow-right"></i>
+                                    </a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@item.NumeroPlaca</td>
-                                    <td>@item.Tipo</td>
-                                    <td>@item.Marca</td>
-                                    <td>@item.Color</td>
-                                    <td>
-                                        @if (item.Usuario != null)
-                                        {
-                                            @item.Usuario.Nombre
-                                        }
-                                        else
-                                        {
-                                            <span class="text-muted">No asignado</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (item.UsaEspacioLey7600 == true)
-                                        {
-                                            <span class="badge bg-info">Sí</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge bg-secondary">No</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        <a href="@Url.Action("RegistrarSalida", "SeguridadHome", new { id = item.VehiculoID })" class="btn btn-danger btn-sm">
-                                            <i class="fa fa-sign-out"></i> Registrar Salida
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            }
-        </div>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
     </div>
 </div>
 
@@ -110,7 +137,9 @@
                 $('#tablaVehiculos').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-                    }
+                    },
+                    "responsive": true,
+                    "pageLength": 10
                 });
             }
         });
