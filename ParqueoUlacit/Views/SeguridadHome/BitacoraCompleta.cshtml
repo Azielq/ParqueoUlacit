@@ -4,127 +4,142 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
+<div class="container my-5">
+    <!-- Título de la sección -->
     <div class="row mb-4">
         <div class="col">
-            <h2>Bitácora Completa del Parqueo</h2>
-            <p>Historial de entradas y salidas para el parqueo: <strong>@ViewBag.NombreParqueo</strong></p>
-        </div>
-        <div class="col-auto">
-            <a href="@Url.Action("Index", "SeguridadHome")" class="btn btn-secondary">
-                <i class="fa fa-arrow-left"></i> Volver al Panel
-            </a>
+            <h2 class="section-title">Bitácora Completa del Parqueo</h2>
+            <div class="section-divider"></div>
+            <p class="text-muted mt-3">Historial de entradas y salidas para el parqueo: <strong>@ViewBag.NombreParqueo</strong></p>
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Historial de Movimientos</h4>
+    <!-- Contenedor principal de la bitácora -->
+    <div class="form-container">
+        <div class="form-header d-flex justify-content-between align-items-center mb-4">
+            <h4 class="mb-0"><i class="bi bi-journal-text me-2"></i>Historial de Movimientos</h4>
+            <a href="@Url.Action("Index", "SeguridadHome")" class="pulse-button-inverse">
+                <span>Volver al Panel</span>
+                <i class="bi bi-arrow-left"></i>
+            </a>
         </div>
-        <div class="card-body">
-            @if (!Model.Any())
-            {
-                <div class="alert alert-info">
-                    No hay registros en la bitácora para este parqueo.
-                </div>
-            }
-            else
-            {
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover" id="tablaBitacora">
-                        <thead>
-                            <tr>
-                                <th>Fecha y Hora</th>
-                                <th>Tipo</th>
-                                <th>Placa</th>
-                                <th>Vehículo</th>
-                                <th>Usuario</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info mt-3">
+                <i class="bi bi-info-circle-fill me-2"></i>
+                No hay registros en la bitácora para este parqueo.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive mt-4">
+                <table class="table" id="tablaBitacora">
+                    <thead>
+                        <tr class="bg-light">
+                            <th class="rounded-start py-3" style="width: 15%">Fecha y Hora</th>
+                            <th class="py-3" style="width: 18%">Tipo</th>
+                            <th class="py-3" style="width: 12%">Placa</th>
+                            <th class="py-3" style="width: 25%">Vehículo</th>
+                            <th class="py-3" style="width: 15%">Usuario</th>
+                            <th class="rounded-end py-3" style="width: 15%">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            string leftBorderColor = "";
+                            string badgeStyle = "";
+                            string badgeIcon = "";
+
+                            // Establecer estilo según el tipo de movimiento
+                            if (item.TipoMovimiento == "Salida")
                             {
-                                string rowClass = "";
+                                leftBorderColor = "border-start border-danger border-3";
+                                badgeStyle = "bg-white border border-danger text-danger";
+                                badgeIcon = "bi-box-arrow-right";
+                            }
+                            else if (item.TipoMovimiento == "Ingreso Rechazado")
+                            {
+                                leftBorderColor = "border-start border-warning border-3";
+                                badgeStyle = "bg-white border border-warning text-warning";
+                                badgeIcon = "bi-x-circle";
+                            }
+                            else if (item.TipoMovimiento == "Primer Ingreso")
+                            {
+                                leftBorderColor = "border-start border-info border-3";
+                                badgeStyle = "bg-white border border-info text-info";
+                                badgeIcon = "bi-box-arrow-in-right";
+                            }
+                            else
+                            {
+                                leftBorderColor = "border-start border-success border-3";
+                                badgeStyle = "bg-white border border-success text-success";
+                                badgeIcon = "bi-check-circle";
+                            }
 
-                                // Establecer la clase de la fila según el tipo de movimiento
-                                if (item.TipoMovimiento == "Salida")
-                                {
-                                    rowClass = "table-danger";
-                                }
-                                else if (item.TipoMovimiento == "Ingreso Rechazado")
-                                {
-                                    rowClass = "table-warning";
-                                }
-                                else
-                                {
-                                    rowClass = "table-success";
-                                }
-
-                                <tr class="@rowClass">
-                                    <td>@(item.Fecha.HasValue ? item.Fecha.Value.ToString("dd/MM/yyyy HH:mm") : "")</td>
-                                    <td>
-                                        @if (item.TipoMovimiento == "Salida")
+                            <tr class="align-middle border-bottom">
+                                <td class="@leftBorderColor py-3">
+                                    <div class="fw-normal">
+                                        @(item.Fecha.HasValue ? item.Fecha.Value.ToString("dd/MM/yyyy") : "")
+                                        <br />
+                                        <small class="text-muted">@(item.Fecha.HasValue ? item.Fecha.Value.ToString("HH:mm") : "")</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge rounded-pill @badgeStyle py-2 px-3 d-inline-block" style="min-width: 120px; text-align: center;">
+                                        <i class="bi @badgeIcon me-1"></i>@item.TipoMovimiento
+                                    </span>
+                                </td>
+                                <td class="fw-medium">@item.NumeroPlaca</td>
+                                <td>
+                                    @if (item.Vehiculo != null)
+                                    {
+                                        <span>@item.Vehiculo.Marca @item.Vehiculo.Color (@item.Vehiculo.Tipo)</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Vehiculo != null && item.Vehiculo.Usuario != null)
+                                    {
+                                        <span>@item.Vehiculo.Usuario.Nombre</span>
+                                    }
+                                    else if (item.TipoMovimiento == "Ingreso Rechazado")
+                                    {
+                                        <span class="text-muted fst-italic">No registrado</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.EstadoIngreso.HasValue)
+                                    {
+                                        if (item.EstadoIngreso.Value)
                                         {
-                                            <span class="badge bg-danger">Salida</span>
-                                        }
-                                        else if (item.TipoMovimiento == "Primer Ingreso")
-                                        {
-                                            <span class="badge bg-info">Primer Ingreso</span>
-                                        }
-                                        else if (item.TipoMovimiento == "Ingreso Rechazado")
-                                        {
-                                            <span class="badge bg-warning text-dark">Ingreso Rechazado</span>
+                                            <span class="badge rounded-pill bg-white border border-success text-success py-2 px-3 d-inline-block" style="min-width: 120px; text-align: center;">
+                                                <i class="bi bi-check-lg me-1"></i>Ingresó
+                                            </span>
                                         }
                                         else
                                         {
-                                            <span class="badge bg-success">@item.TipoMovimiento</span>
-                                        }
-                                    </td>
-                                    <td>@item.NumeroPlaca</td>
-                                    <td>
-                                        @if (item.Vehiculo != null)
-                                        {
-                                            <span>@item.Vehiculo.Marca @item.Vehiculo.Color (@item.Vehiculo.Tipo)</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (item.Vehiculo != null && item.Vehiculo.Usuario != null)
-                                        {
-                                            @item.Vehiculo.Usuario.Nombre
-                                        }
-                                        else if (item.TipoMovimiento == "Ingreso Rechazado")
-                                        {
-                                            <span class="text-muted">No registrado</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (item.EstadoIngreso.HasValue)
-                                        {
-                                            if (item.EstadoIngreso.Value)
+                                            if (item.TipoMovimiento == "Ingreso Rechazado")
                                             {
-                                                <span class="badge bg-success">Ingresó</span>
+                                                <span class="badge rounded-pill bg-white border border-warning text-warning py-2 px-3 d-inline-block" style="min-width: 120px; text-align: center;">
+                                                    <i class="bi bi-x-circle me-1"></i>Acceso denegado
+                                                </span>
                                             }
                                             else
                                             {
-                                                if (item.TipoMovimiento == "Ingreso Rechazado")
-                                                {
-                                                    <span class="badge bg-warning text-dark">Acceso denegado</span>
-                                                }
-                                                else
-                                                {
-                                                    <span class="badge bg-warning text-dark">No ingresó</span>
-                                                }
+                                                <span class="badge rounded-pill bg-white border border-warning text-warning py-2 px-3 d-inline-block" style="min-width: 120px; text-align: center;">
+                                                    <i class="bi bi-dash-circle me-1"></i>No ingresó
+                                                </span>
                                             }
                                         }
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            }
-        </div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
     </div>
 </div>
 
@@ -137,8 +152,11 @@
                     "order": [[0, "desc"]], // Ordenar por fecha descendente
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-                    }
+                    },
+                    "responsive": true,
+                    "pageLength": 25
                 });
             }
-        });</script>
+        });
+    </script>
 }

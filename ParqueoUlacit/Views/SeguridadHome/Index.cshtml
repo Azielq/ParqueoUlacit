@@ -4,249 +4,274 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
+<div class="container my-5">
+    <!-- Título de la sección -->
     <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">Panel de Control - Seguridad</h3>
-                    <a href="@Url.Action("CambiarParqueo", "SeguridadHome")" class="btn btn-light btn-sm">
-                        Cambiar Parqueo
-                    </a>
-                </div>
-                <div class="card-body">
-                    <div class="alert alert-info">
-                        <h4 class="alert-heading">Parqueo bajo supervisión: @ViewBag.NombreParqueo</h4>
-                        <p>Bienvenido, @Session["Nombre"]. Usted está supervisando actualmente el parqueo @ViewBag.NombreParqueo.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="col">
+            <h2 class="section-title">Panel de Control - Seguridad</h2>
+            <div class="section-divider"></div>
+            <p class="text-muted mt-3">Bienvenido al panel de control para supervisión del parqueo.</p>
         </div>
     </div>
 
+    <!-- Información del parqueo actual -->
+    <div class="form-container mb-4">
+        <div class="form-header d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"><i class="bi bi-p-square-fill me-2"></i>Parqueo bajo supervisión: @ViewBag.NombreParqueo</h4>
+            <a href="@Url.Action("CambiarParqueo", "SeguridadHome")" class="pulse-button-inverse">
+                <span>Cambiar Parqueo</span>
+                <i class="bi bi-arrow-repeat"></i>
+            </a>
+        </div>
+        <div class="p-4 info-box mt-3">
+            <p class="mb-0">Bienvenido, @Session["Nombre"]. Usted está supervisando actualmente el parqueo <strong>@ViewBag.NombreParqueo</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Mensajes de alerta -->
     @if (TempData["Mensaje"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @TempData["Mensaje"]
+        <div class="alert alert-success alert-dismissible fade show custom-alert" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> @TempData["Mensaje"]
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
 
     @if (TempData["Error"] != null)
     {
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            @TempData["Error"]
+        <div class="alert alert-danger alert-dismissible fade show custom-alert" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["Error"]
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
 
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0">Control de Ingresos</h5>
-                </div>
-                <div class="card-body">
-                    <p>Registrar entrada de vehículos al parqueo.</p>
-                    <a href="@Url.Action("IngresarVehiculo", "SeguridadHome")" class="btn btn-success w-100">Registrar Ingreso</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-header bg-danger text-white">
-                    <h5 class="mb-0">Control de Salidas</h5>
-                </div>
-                <div class="card-body">
-                    <p>Registrar salida de vehículos del parqueo.</p>
-                    <a href="@Url.Action("RegistrarSalida", "SeguridadHome")" class="btn btn-danger w-100">Registrar Salida</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">Consulta de Vehículos</h5>
-                </div>
-                <div class="card-body">
-                    <p>Verificar información de vehículos registrados.</p>
-                    <a href="@Url.Action("VehiculosActuales", "SeguridadHome")" class="btn btn-info w-100">Consultar Vehículos</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Acciones principales -->
     <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header bg-secondary text-white">
-                    <h5 class="mb-0">Disponibilidad de Espacios</h5>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card h-100">
+                <div class="feature-icon bg-success bg-opacity-10">
+                    <i class="bi bi-box-arrow-in-right"></i>
                 </div>
-                <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-md-4">
-                            <div class="p-3 border rounded mb-3">
-                                <h3>Automóviles</h3>
-                                @if (ViewBag.EspaciosAutosTotal != null)
-                                {
-                                    <h2 class="text-primary">@ViewBag.EspaciosAutosDisponibles/@ViewBag.EspaciosAutosTotal</h2>
-                                }
-                                else
-                                {
-                                    <h2 class="text-primary">--/--</h2>
-                                }
-                                <small>Espacios disponibles/total</small>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="p-3 border rounded mb-3">
-                                <h3>Motocicletas</h3>
-                                @if (ViewBag.EspaciosMotosTotal != null)
-                                {
-                                    <h2 class="text-primary">@ViewBag.EspaciosMotosDisponibles/@ViewBag.EspaciosMotosTotal</h2>
-                                }
-                                else
-                                {
-                                    <h2 class="text-primary">--/--</h2>
-                                }
-                                <small>Espacios disponibles/total</small>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="p-3 border rounded mb-3">
-                                <h3>Ley 7600</h3>
-                                @if (ViewBag.EspaciosLey7600Total != null)
-                                {
-                                    <h2 class="text-primary">@ViewBag.EspaciosLey7600Disponibles/@ViewBag.EspaciosLey7600Total</h2>
-                                }
-                                else
-                                {
-                                    <h2 class="text-primary">--/--</h2>
-                                }
-                                <small>Espacios disponibles/total</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Bitácora del Parqueo</h5>
-                    <a href="@Url.Action("BitacoraCompleta", "SeguridadHome")" class="btn btn-light btn-sm">
-                        Ver Bitácora Completa
+                <div class="feature-content">
+                    <h3>Control de Ingresos</h3>
+                    <p>Registrar entrada de vehículos al parqueo de manera rápida y eficiente.</p>
+                    <a href="@Url.Action("IngresarVehiculo", "SeguridadHome")" class="pulse-button w-100">
+                        <span>Registrar Ingreso</span>
+                        <i class="bi bi-car-front-fill"></i>
                     </a>
                 </div>
-                <div class="card-body">
-                    @if (!Model.Any())
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="feature-card h-100">
+                <div class="feature-icon bg-danger bg-opacity-10">
+                    <i class="bi bi-box-arrow-right"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Control de Salidas</h3>
+                    <p>Registrar salida de vehículos del parqueo y liberar los espacios ocupados.</p>
+                    <a href="@Url.Action("RegistrarSalida", "SeguridadHome")" class="pulse-button w-100">
+                        <span>Registrar Salida</span>
+                        <i class="bi bi-sign-turn-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="feature-card h-100">
+                <div class="feature-icon bg-info bg-opacity-10">
+                    <i class="bi bi-search"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Consulta de Vehículos</h3>
+                    <p>Verificar información de vehículos registrados actualmente en el parqueo.</p>
+                    <a href="@Url.Action("VehiculosActuales", "SeguridadHome")" class="pulse-button w-100">
+                        <span>Consultar Vehículos</span>
+                        <i class="bi bi-list-check"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Disponibilidad de espacios -->
+    <div class="form-container mb-4">
+        <div class="form-header mb-4">
+            <h4 class="mb-0"><i class="bi bi-grid-3x3-gap-fill me-2"></i>Disponibilidad de Espacios</h4>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="feature-box h-100">
+                    <div class="feature-icon-container mb-3">
+                        <i class="bi bi-car-front-fill"></i>
+                    </div>
+                    <h3>Automóviles</h3>
+                    @if (ViewBag.EspaciosAutosTotal != null)
                     {
-                        <div class="alert alert-info">
-                            No hay registros en la bitácora para este parqueo.
-                        </div>
+                        <h2 class="stat-number">@ViewBag.EspaciosAutosDisponibles<span class="fs-4 text-muted">/@ViewBag.EspaciosAutosTotal</span></h2>
                     }
                     else
                     {
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Fecha y Hora</th>
-                                        <th>Tipo</th>
-                                        <th>Placa</th>
-                                        <th>Vehículo</th>
-                                        <th>Usuario</th>
-                                        <th>Estado</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        string rowClass = "";
-
-                                        // Establecer la clase de la fila según el tipo de movimiento
-                                        if (item.TipoMovimiento == "Salida")
-                                        {
-                                            rowClass = "table-danger";
-                                        }
-                                        else if (item.TipoMovimiento == "Ingreso Rechazado")
-                                        {
-                                            rowClass = "table-warning";
-                                        }
-                                        else
-                                        {
-                                            rowClass = "table-success";
-                                        }
-
-                                        <tr class="@rowClass">
-                                            <td>@(item.Fecha.HasValue ? item.Fecha.Value.ToString("dd/MM/yyyy HH:mm") : "")</td>
-                                            <td>
-                                                @if (item.TipoMovimiento == "Salida")
-                                                {
-                                                    <span class="badge bg-danger">Salida</span>
-                                                }
-                                                else if (item.TipoMovimiento == "Primer Ingreso")
-                                                {
-                                                    <span class="badge bg-info">Primer Ingreso</span>
-                                                }
-                                                else if (item.TipoMovimiento == "Ingreso Rechazado")
-                                                {
-                                                    <span class="badge bg-warning text-dark">Rechazado</span>
-                                                }
-                                                else
-                                                {
-                                                    <span class="badge bg-success">@item.TipoMovimiento</span>
-                                                }
-                                            </td>
-                                            <td>@item.NumeroPlaca</td>
-                                            <td>
-                                                @if (item.Vehiculo != null)
-                                                {
-                                                    <span>@item.Vehiculo.Marca @item.Vehiculo.Color</span>
-                                                }
-                                            </td>
-                                            <td>
-                                                @if (item.Vehiculo != null && item.Vehiculo.Usuario != null)
-                                                {
-                                                    @item.Vehiculo.Usuario.Nombre
-                                                }
-                                                else if (item.TipoMovimiento == "Ingreso Rechazado")
-                                                {
-                                                    <span class="text-muted">No registrado</span>
-                                                }
-                                            </td>
-                                            <td>
-                                                @if (item.EstadoIngreso.HasValue)
-                                                {
-                                                    if (item.EstadoIngreso.Value)
-                                                    {
-                                                        <span class="badge bg-success">Exitoso</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span class="badge bg-warning text-dark">Denegado</span>
-                                                    }
-                                                }
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                        <h2 class="stat-number">--<span class="fs-4 text-muted">/--</span></h2>
                     }
+                    <p class="stat-text">Espacios disponibles/total</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-box h-100">
+                    <div class="feature-icon-container mb-3">
+                        <i class="bi bi-bicycle"></i>
+                    </div>
+                    <h3>Motocicletas</h3>
+                    @if (ViewBag.EspaciosMotosTotal != null)
+                    {
+                        <h2 class="stat-number">@ViewBag.EspaciosMotosDisponibles<span class="fs-4 text-muted">/@ViewBag.EspaciosMotosTotal</span></h2>
+                    }
+                    else
+                    {
+                        <h2 class="stat-number">--<span class="fs-4 text-muted">/--</span></h2>
+                    }
+                    <p class="stat-text">Espacios disponibles/total</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-box h-100">
+                    <div class="feature-icon-container mb-3">
+                        <i class="bi bi-person-wheelchair"></i>
+                    </div>
+                    <h3>Ley 7600</h3>
+                    @if (ViewBag.EspaciosLey7600Total != null)
+                    {
+                        <h2 class="stat-number">@ViewBag.EspaciosLey7600Disponibles<span class="fs-4 text-muted">/@ViewBag.EspaciosLey7600Total</span></h2>
+                    }
+                    else
+                    {
+                        <h2 class="stat-number">--<span class="fs-4 text-muted">/--</span></h2>
+                    }
+                    <p class="stat-text">Espacios disponibles/total</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12 text-end">
-            <a href="@Url.Action("Logout", "Login")" class="btn btn-outline-secondary">Cerrar Sesión</a>
+    <!-- Bitácora del Parqueo -->
+    <div class="form-container mb-4">
+        <div class="form-header d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"><i class="bi bi-journal-text me-2"></i>Bitácora del Parqueo</h4>
+            <a href="@Url.Action("BitacoraCompleta", "SeguridadHome")" class="pulse-button-inverse">
+                <span>Ver Bitácora Completa</span>
+                <i class="bi bi-arrow-right"></i>
+            </a>
         </div>
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info mt-3">
+                <i class="bi bi-info-circle-fill me-2"></i>
+                No hay registros en la bitácora para este parqueo.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive mt-4">
+                <table class="table">
+                    <thead>
+                        <tr class="bg-light">
+                            <th class="rounded-start py-3" style="width: 15%">Fecha y Hora</th>
+                            <th class="py-3" style="width: 18%">Tipo</th>
+                            <th class="py-3" style="width: 12%">Placa</th>
+                            <th class="py-3" style="width: 25%">Vehículo</th>
+                            <th class="py-3" style="width: 15%">Usuario</th>
+                            <th class="rounded-end py-3" style="width: 15%">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            string leftBorderColor = "";
+                            string badgeStyle = "";
+                            string badgeIcon = "";
+
+                            // Establecer estilo según el tipo de movimiento
+                            if (item.TipoMovimiento == "Salida")
+                            {
+                                leftBorderColor = "border-start border-danger border-3";
+                                badgeStyle = "bg-white border border-danger text-danger";
+                                badgeIcon = "bi-box-arrow-right";
+                            }
+                            else if (item.TipoMovimiento == "Ingreso Rechazado")
+                            {
+                                leftBorderColor = "border-start border-warning border-3";
+                                badgeStyle = "bg-white border border-warning text-warning";
+                                badgeIcon = "bi-x-circle";
+                            }
+                            else if (item.TipoMovimiento == "Primer Ingreso")
+                            {
+                                leftBorderColor = "border-start border-info border-3";
+                                badgeStyle = "bg-white border border-info text-info";
+                                badgeIcon = "bi-box-arrow-in-right";
+                            }
+                            else
+                            {
+                                leftBorderColor = "border-start border-success border-3";
+                                badgeStyle = "bg-white border border-success text-success";
+                                badgeIcon = "bi-check-circle";
+                            }
+
+                            <tr class="align-middle border-bottom">
+                                <td class="@leftBorderColor py-3">
+                                    <div class="fw-normal">
+                                        @(item.Fecha.HasValue ? item.Fecha.Value.ToString("dd/MM/yyyy") : "")
+                                        <br />
+                                        <small class="text-muted">@(item.Fecha.HasValue ? item.Fecha.Value.ToString("HH:mm") : "")</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge rounded-pill @badgeStyle py-2 px-3 d-inline-block" style="min-width: 120px; text-align: center;">
+                                        <i class="bi @badgeIcon me-1"></i>@item.TipoMovimiento
+                                    </span>
+                                </td>
+                                <td class="fw-medium">@item.NumeroPlaca</td>
+                                <td>
+                                    @if (item.Vehiculo != null)
+                                    {
+                                        <span>@item.Vehiculo.Marca @item.Vehiculo.Color</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Vehiculo != null && item.Vehiculo.Usuario != null)
+                                    {
+                                        <span>@item.Vehiculo.Usuario.Nombre</span>
+                                    }
+                                    else if (item.TipoMovimiento == "Ingreso Rechazado")
+                                    {
+                                        <span class="text-muted fst-italic">No registrado</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.EstadoIngreso.HasValue)
+                                    {
+                                        if (item.EstadoIngreso.Value)
+                                        {
+                                            <span class="badge rounded-pill bg-white border border-success text-success py-2 px-3 d-inline-block" style="min-width: 120px; text-align: center;">
+                                                <i class="bi bi-check-lg me-1"></i>Exitoso
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge rounded-pill bg-white border border-warning text-warning py-2 px-3 d-inline-block" style="min-width: 120px; text-align: center;">
+                                                <i class="bi bi-exclamation-triangle me-1"></i>Denegado
+                                            </span>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
     </div>
 </div>

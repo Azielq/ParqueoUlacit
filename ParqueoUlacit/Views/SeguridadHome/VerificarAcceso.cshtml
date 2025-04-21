@@ -3,56 +3,148 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
+<div class="container my-5">
+    <!-- Título de la sección -->
     <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">Verificar Acceso de Vehículo</h3>
-                    <a href="@Url.Action("Index", "SeguridadHome")" class="btn btn-light btn-sm">
-                        Volver al Panel
-                    </a>
-                </div>
-                <div class="card-body">
-                    @if (ViewBag.Error != null)
-                    {
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            @ViewBag.Error
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    }
-
-                    @if (ViewBag.Mensaje != null)
-                    {
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            @ViewBag.Mensaje
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    }
-
-                    <div class="alert alert-info">
-                        <p>Ingrese el número de placa del vehículo para verificar si puede ingresar al parqueo.</p>
-                    </div>
-
-                    @using (Html.BeginForm("VerificarAcceso", "SeguridadHome", FormMethod.Post, new { @class = "row g-3" }))
-                    {
-                        @Html.AntiForgeryToken()
-
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="numeroPlaca" class="form-label">Número de Placa</label>
-                                <input type="text" id="numeroPlaca" name="numeroPlaca" class="form-control form-control-lg" required
-                                       placeholder="Ingrese el número de placa" autofocus>
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary btn-lg w-100">
-                                <i class="fa fa-search"></i> Verificar Acceso
-                            </button>
-                        </div>
-                    }
-                </div>
-            </div>
+        <div class="col">
+            <h2 class="section-title">Verificar Acceso de Vehículo</h2>
+            <div class="section-divider"></div>
+            <p class="text-muted mt-3">Compruebe si un vehículo tiene permiso para ingresar al parqueo: <strong>@ViewBag.NombreParqueo</strong></p>
         </div>
     </div>
+
+    <!-- Contenedor del formulario -->
+    <div class="form-container">
+        <div class="form-header d-flex justify-content-between align-items-center mb-4">
+            <h4 class="mb-0"><i class="bi bi-shield-check me-2"></i>Verificación de Acceso</h4>
+            <a href="@Url.Action("Index", "SeguridadHome")" class="pulse-button-inverse">
+                <span>Volver al Panel</span>
+                <i class="bi bi-arrow-left"></i>
+            </a>
+        </div>
+
+        <!-- Mensajes de alerta -->
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+                <div>@ViewBag.Error</div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (ViewBag.Mensaje != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
+                <i class="bi bi-check-circle-fill me-2 fs-4"></i>
+                <div>@ViewBag.Mensaje</div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <!-- Caja de información -->
+        <div class="info-box p-4 mb-4">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-info-circle-fill me-3 fs-4"></i>
+                <p class="mb-0">Ingrese el número de placa del vehículo para verificar si tiene permiso de acceso al parqueo.</p>
+            </div>
+        </div>
+
+        <!-- Formulario de verificación -->
+        @using (Html.BeginForm("VerificarAcceso", "SeguridadHome", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row mb-4">
+                <div class="col-lg-8">
+                    <div class="form-group">
+                        <label for="numeroPlaca" class="form-label">Número de Placa</label>
+                        <input type="text" id="numeroPlaca" name="numeroPlaca" class="form-control form-control-lg" required
+                               placeholder="Ejemplo: ABC-123 o 123-456" autofocus>
+                        <div id="placaError" class="text-danger mt-2" style="display: none;"></div>
+                    </div>
+                </div>
+                <div class="col-lg-4 d-flex align-items-end">
+                    <button type="submit" class="pulse-button w-100 py-3">
+                        <span>Verificar Acceso</span>
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Función para validar el formato de la placa
+            function validateLicensePlate(plate) {
+                // Formato tipo letras-números (ABC-123)
+                var letterNumberFormat = /^[A-Z]{3}-[0-9]{3,4}$/;
+
+                // Formato tipo números-números (123-456)
+                var numberNumberFormat = /^[0-9]{3}-[0-9]{3}$/;
+
+                return letterNumberFormat.test(plate) || numberNumberFormat.test(plate);
+            }
+
+            // Convertir el input de placa a mayúsculas en tiempo real
+            $('#numeroPlaca').keyup(function () {
+                this.value = this.value.toUpperCase();
+            });
+
+            // Formatear la placa (ejemplo: ABC-123 o 123-456)
+            $('#numeroPlaca').on('input', function () {
+                var val = this.value;
+                var errorElement = $('#placaError');
+
+                // Permitir letras (mayúsculas y minúsculas), números y guión
+                val = val.replace(/[^a-zA-Z0-9\-]/g, '').toUpperCase();
+
+                // Si ya hay un guión, asegurarse de que solo haya uno
+                if (val.indexOf('-') !== -1) {
+                    var parts = val.split('-');
+                    if (parts.length > 2) {
+                        val = parts[0] + '-' + parts.slice(1).join('');
+                    }
+                }
+                // Si no hay guión y ya hay 3 caracteres, agregar automáticamente
+                else if (val.length === 3) {
+                    val = val + '-';
+                }
+
+                this.value = val;
+
+                // Validar formato y mostrar feedback
+                if (val.length > 5) { // Solo validar cuando haya contenido suficiente
+                    if (validateLicensePlate(val)) {
+                        errorElement.hide();
+                        $(this).removeClass('is-invalid').addClass('is-valid');
+                    } else {
+                        errorElement.text('La placa debe tener formato ABC-123 o 123-456').show();
+                        $(this).removeClass('is-valid').addClass('is-invalid');
+                    }
+                } else {
+                    errorElement.hide();
+                    $(this).removeClass('is-valid is-invalid');
+                }
+            });
+
+            // Validar el formato de la placa antes de enviar el formulario
+            $('form').submit(function (e) {
+                var placa = $('#numeroPlaca').val();
+                var errorElement = $('#placaError');
+
+                if (placa && !validateLicensePlate(placa)) {
+                    errorElement.text('La placa debe tener formato ABC-123 (tres letras, guión, números) o 123-456 (tres números, guión, tres números)').show();
+                    $('#numeroPlaca').removeClass('is-valid').addClass('is-invalid');
+                    e.preventDefault();
+                    return false;
+                }
+
+                return true;
+            });
+        });
+    </script>
+}

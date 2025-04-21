@@ -4,88 +4,96 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
+<div class="container my-5">
+    <!-- Título de la sección -->
     <div class="row mb-4">
         <div class="col">
-            <h2>Crear Nuevo Parqueo</h2>
-            <p>Complete la información para agregar un nuevo parqueo al sistema.</p>
+            <h2 class="section-title">Crear Nuevo Parqueo</h2>
+            <div class="section-divider"></div>
+            <p class="text-muted mt-3">Complete la información para agregar un nuevo parqueo al sistema.</p>
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Información del Parqueo</h4>
+    <!-- Contenedor del formulario -->
+    <div class="form-container">
+        <div class="form-header mb-4">
+            <h4 class="mb-0"><i class="bi bi-p-square-fill me-2"></i>Información del Parqueo</h4>
         </div>
-        <div class="card-body">
-            @using (Html.BeginForm("Create", "Parqueo", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
+        @using (Html.BeginForm("Create", "Parqueo", FormMethod.Post, new { novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Nombre_Parqueo, "Nombre del Parqueo", new { @class = "form-label" })
-                            @Html.TextBoxFor(model => model.Nombre_Parqueo, new { @class = "form-control", placeholder = "Ingrese el nombre del parqueo", required = "required" })
-                            @Html.ValidationMessageFor(model => model.Nombre_Parqueo, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Ubicacion, "Ubicación", new { @class = "form-label" })
-                            @Html.TextBoxFor(model => model.Ubicacion, new { @class = "form-control", placeholder = "Ingrese la ubicación del parqueo", required = "required" })
-                            @Html.ValidationMessageFor(model => model.Ubicacion, "", new { @class = "text-danger" })
-                        </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Nombre_Parqueo, "Nombre del Parqueo", new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Nombre_Parqueo, new { @class = "form-control", placeholder = "Ingrese el nombre del parqueo", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Nombre_Parqueo, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Espacios_Carros, "Espacios para Automóviles", new { @class = "form-label" })
-                            @Html.TextBoxFor(model => model.Espacios_Carros, new { @class = "form-control", type = "number", min = "0", placeholder = "Cantidad de espacios para automóviles" })
-                            @Html.ValidationMessageFor(model => model.Espacios_Carros, "", new { @class = "text-danger" })
-                        </div>
+                <div class="col-md-6 mb-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Ubicacion, "Ubicación", new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Ubicacion, new { @class = "form-control", placeholder = "Ingrese la ubicación del parqueo", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Ubicacion, "", new { @class = "text-danger" })
                     </div>
+                </div>
+            </div>
 
-                    <div class="col-md-4 mb-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Espacios_Moto, "Espacios para Motocicletas", new { @class = "form-label" })
-                            @Html.TextBoxFor(model => model.Espacios_Moto, new { @class = "form-control", type = "number", min = "0", placeholder = "Cantidad de espacios para motocicletas" })
-                            @Html.ValidationMessageFor(model => model.Espacios_Moto, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Espacios_Ley7600, "Espacios Ley 7600", new { @class = "form-label" })
-                            @Html.TextBoxFor(model => model.Espacios_Ley7600, new { @class = "form-control", type = "number", min = "0", placeholder = "Cantidad de espacios Ley 7600" })
-                            @Html.ValidationMessageFor(model => model.Espacios_Ley7600, "", new { @class = "text-danger" })
-                        </div>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Espacios_Carros, "Espacios para Automóviles", new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Espacios_Carros, new { @class = "form-control", type = "number", min = "0", placeholder = "Cantidad de espacios para automóviles" })
+                        @Html.ValidationMessageFor(model => model.Espacios_Carros, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="row mt-4">
-                    <div class="col">
-                        <div class="d-flex justify-content-between">
-                            <a href="@Url.Action("Index", "AdminHome")" class="btn btn-secondary">
-                                <i class="fa fa-arrow-left"></i> Volver a la Lista
-                            </a>
-                            <button type="submit" class="btn btn-success" >
-                                <i class="fa fa-save"></i> Guardar Parqueo
-                            </button>
-                        </div>
+                <div class="col-md-4 mb-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Espacios_Moto, "Espacios para Motocicletas", new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Espacios_Moto, new { @class = "form-control", type = "number", min = "0", placeholder = "Cantidad de espacios para motocicletas" })
+                        @Html.ValidationMessageFor(model => model.Espacios_Moto, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            }
-        </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Espacios_Ley7600, "Espacios Ley 7600", new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Espacios_Ley7600, new { @class = "form-control", type = "number", min = "0", placeholder = "Cantidad de espacios Ley 7600" })
+                        @Html.ValidationMessageFor(model => model.Espacios_Ley7600, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box mb-4">
+                <i class="bi bi-info-circle-fill me-2"></i> Nota: Los espacios de ley 7600 son para personas con discapacidad y deben cumplir la normativa vigente.
+            </div>
+
+            <div class="form-actions">
+                <a href="@Url.Action("Index", "AdminHome")" class="pulse-button-inverse">
+                    <span>Volver al Panel</span>
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+                <button type="submit" class="pulse-button">
+                    <span>Guardar Parqueo</span>
+                    <i class="bi bi-p-square-fill"></i>
+                </button>
+            </div>
+        }
     </div>
 </div>
 
 @section Scripts {
-    <script>// Validación de formulario del lado del cliente
+    <script>
         $(document).ready(function () {
-            $('form').submit(function (e) {
+            // Prevenir la validación automática del navegador
+            $('form').attr('novalidate', 'novalidate');
+
+            // Manejar la validación cuando se envía el formulario
+            $('form').on('submit', function (e) {
+                var form = $(this);
                 var isValid = true;
 
                 // Validar nombre del parqueo
@@ -104,10 +112,30 @@
                     $('#Ubicacion').removeClass('is-invalid');
                 }
 
+                // Validar que los campos numéricos tengan valores no negativos
+                $('.form-control[type="number"]').each(function () {
+                    var value = parseInt($(this).val()) || 0;
+                    if (value < 0) {
+                        $(this).addClass('is-invalid');
+                        isValid = false;
+                    } else {
+                        $(this).removeClass('is-invalid');
+                    }
+                });
+
                 // Evitar envío del formulario si no es válido
                 if (!isValid) {
                     e.preventDefault();
+                    e.stopPropagation();
                 }
+
+                form.addClass('was-validated');
             });
-        });</script>
+
+            // Limpiar clase de error al interactuar con un campo
+            $('.form-control').on('input', function () {
+                $(this).removeClass('is-invalid');
+            });
+        });
+    </script>
 }
