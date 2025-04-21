@@ -1,0 +1,145 @@
+﻿@model ParqueoUlacit.Models.ViewModel.VehiculoViewModel
+@{
+    ViewBag.Title = "Editar Vehículo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="section-title">Editar Vehículo</h2>
+            <div class="section-divider"></div>
+            <p class="text-muted mt-3">Actualice la información del vehículo seleccionado.</p>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <div class="form-header mb-4">
+            <h4 class="mb-0"><i class="bi bi-car-front me-2"></i>Información del Vehículo</h4>
+        </div>
+        @using (Html.BeginForm("Edit", "Vehiculo", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.VehiculoID)
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Marca, "Marca", new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Marca, new { @class = "form-control", placeholder = "Ingrese la marca del vehículo", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Marca, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Color, "Color", new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Color, new { @class = "form-control", placeholder = "Ingrese el color del vehículo", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NumeroPlaca, "Número de Placa", new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.NumeroPlaca, new { @class = "form-control", placeholder = "Ingrese el número de placa", required = "required" })
+                        @Html.ValidationMessageFor(model => model.NumeroPlaca, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Tipo, "Tipo de Vehículo", new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Tipo,
+                            new SelectList(new[]
+                            {
+                                new { Value = "Automóvil", Text = "Automóvil" },
+                                new { Value = "Motocicleta", Text = "Motocicleta" },
+                                new { Value = "Camión", Text = "Camión" },
+                                new { Value = "Otro", Text = "Otro" }
+                            }, "Value", "Text", Model.Tipo),
+                            "Seleccione un tipo", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UsuarioID, "Propietario", new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.UsuarioID, (SelectList)ViewBag.UsuarioID, "Seleccione un Usuario", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.UsuarioID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Estado, "Estado", new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Estado,
+                            new SelectList(new[]
+                            {
+                                new { Value = "Activo", Text = "Activo" },
+                                new { Value = "Inactivo", Text = "Inactivo" }
+                            }, "Value", "Text", Model.Estado),
+                            "Seleccione un estado", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="form-check">
+                        <input type="checkbox"
+                               class="form-check-input"
+                               id="UsaEspacioLey7600"
+                               name="UsaEspacioLey7600"
+                               value="true"
+                               @(Model.UsaEspacioLey7600.GetValueOrDefault() ? "checked" : "") />
+                        <label class="form-check-label" for="UsaEspacioLey7600">Requiere espacio Ley 7600</label>
+                        @Html.ValidationMessage("UsaEspacioLey7600", "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+                @if (Model.ParqueoID.HasValue)
+                {
+                    <div class="col-md-6 mb-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ParqueoID, "Parqueo Asignado", new { @class = "form-label" })
+                            @Html.HiddenFor(model => model.ParqueoID)
+                            <input type="text" class="form-control" value="@Model.ParqueoID" disabled />
+                            <small class="form-text text-muted">El parqueo no puede ser modificado desde esta pantalla.</small>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="info-box mb-4">
+                <i class="bi bi-info-circle-fill me-2"></i> Actualice la información del vehículo según sea necesario. Los cambios se aplicarán inmediatamente.
+            </div>
+
+            <div class="form-actions">
+                <a href="@Url.Action("Index", "Vehiculo")" class="pulse-button-inverse">
+                    <span>Volver al Listado</span>
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+                <button type="submit" class="pulse-button ms-auto" id="btnGuardar">
+                    <span>Guardar Cambios</span>
+                    <i class="bi bi-check-circle"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Código JavaScript adicional si es necesario
+        });
+    </script>
+}

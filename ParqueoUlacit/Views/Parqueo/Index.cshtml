@@ -1,0 +1,141 @@
+﻿@model IEnumerable<ParqueoUlacit.Models.TableViewModel.ParqueoTableViewModel>
+@{
+    ViewBag.Title = "Gestión de Parqueos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="section-title">Gestión de Parqueos</h2>
+            <div class="section-divider"></div>
+            <p class="text-muted mt-3">Administre los parqueos disponibles en el sistema.</p>
+        </div>
+    </div>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-header d-flex align-items-center bg-light py-3">
+            <h5 class="card-title mb-0">
+                <i class="bi bi-p-square-fill me-2"></i>Parqueos Registrados
+            </h5>
+            <a href="@Url.Action("Create", "Parqueo")" class="btn btn-success btn-sm ms-auto">
+                <i class="bi bi-plus-circle me-1"></i> Nuevo Parqueo
+            </a>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Ubicación</th>
+                            <th class="text-center">Espacios Carros</th>
+                            <th class="text-center">Espacios Motos</th>
+                            <th class="text-center">Espacios Ley 7600</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Any())
+                        {
+                            foreach (var parqueo in Model)
+                            {
+                                <tr>
+                                    <td>@parqueo.ParqueoID</td>
+                                    <td>@parqueo.Nombre_Parqueo</td>
+                                    <td>@parqueo.Ubicacion</td>
+                                    <td class="text-center">@parqueo.Espacios_Carros</td>
+                                    <td class="text-center">@parqueo.Espacios_Moto</td>
+                                    <td class="text-center">@parqueo.Espacios_Ley7600</td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("Edit", "Parqueo", new { id = parqueo.ParqueoID })" class="btn btn-primary btn-sm me-1" title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-danger btn-sm" title="Eliminar"
+                                                onclick="prepareDelete(@parqueo.ParqueoID, '@parqueo.Nombre_Parqueo')"
+                                                data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-4">
+                                    <div class="alert alert-info mb-0">
+                                        <i class="bi bi-info-circle me-2"></i> No hay parqueos registrados en el sistema.
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-light py-3">
+            <div class="d-flex align-items-center">
+                <small class="text-muted">Mostrando @Model.Count() parqueo(s)</small>
+                <a href="@Url.Action("Index", "AdminHome")" class="pulse-button-inverse ms-auto">
+                    <span>Volver al Panel</span>
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación para eliminar -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmar Eliminación
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que desea eliminar el parqueo <strong id="deleteParqueoName"></strong>?</p>
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    <strong>Advertencia:</strong> Esta acción eliminará también todos los registros de bitácora asociados a este parqueo y no se puede deshacer.
+                </div>
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>
+                    No se puede eliminar un parqueo si tiene vehículos actualmente asignados.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>Cancelar
+                </button>
+                <form id="deleteForm" method="post" style="display: inline;">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash-fill me-1"></i>Eliminar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function prepareDelete(id, name) {
+            document.getElementById('deleteParqueoName').innerText = name;
+            document.getElementById('deleteForm').action = '@Url.Action("Eliminar", "Parqueo")/' + id;
+        }
+    </script>
+}

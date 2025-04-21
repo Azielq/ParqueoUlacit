@@ -17,6 +17,7 @@ namespace ParqueoUlacit.Models.TableViewModel
         public Nullable<bool> ClaveCambiada { get; set; }
         public Nullable<int> RolID { get; set; }
 
+
         public virtual Rol Rol { get; set; }
         public virtual ICollection<Vehiculo> Vehiculoes { get; set; }
 

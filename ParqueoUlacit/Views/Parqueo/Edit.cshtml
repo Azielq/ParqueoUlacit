@@ -1,0 +1,85 @@
+﻿@model ParqueoUlacit.Models.TableViewModel.ParqueoTableViewModel
+@{
+    ViewBag.Title = "Editar Parqueo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="section-title">Editar Parqueo</h2>
+            <div class="section-divider"></div>
+            <p class="text-muted mt-3">Modifique la información del parqueo seleccionado.</p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-light py-3">
+            <h5 class="card-title mb-0">
+                <i class="bi bi-pencil-square me-2"></i>Formulario de Edición
+            </h5>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ParqueoID)
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Nombre_Parqueo, "Nombre del Parqueo", new { @class = "form-label" })
+                            @Html.EditorFor(model => model.Nombre_Parqueo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Nombre_Parqueo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Ubicacion, "Ubicación", new { @class = "form-label" })
+                            @Html.EditorFor(model => model.Ubicacion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Ubicacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Espacios_Carros, "Espacios para Carros", new { @class = "form-label" })
+                            @Html.EditorFor(model => model.Espacios_Carros, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0" } })
+                            @Html.ValidationMessageFor(model => model.Espacios_Carros, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Espacios_Moto, "Espacios para Motos", new { @class = "form-label" })
+                            @Html.EditorFor(model => model.Espacios_Moto, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0" } })
+                            @Html.ValidationMessageFor(model => model.Espacios_Moto, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Espacios_Ley7600, "Espacios Ley 7600", new { @class = "form-label" })
+                            @Html.EditorFor(model => model.Espacios_Ley7600, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0" } })
+                            @Html.ValidationMessageFor(model => model.Espacios_Ley7600, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save me-1"></i> Guardar Cambios
+                    </button>
+                    <a href="@Url.Action("Index", "Parqueo")" class="btn btn-secondary ms-2">
+                        <i class="bi bi-x-circle me-1"></i> Cancelar
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

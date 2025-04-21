@@ -24,11 +24,21 @@
                     <div class="feature-content">
                         <h3>Usuarios</h3>
                         <p>Gestión de cuentas y permisos de usuarios del sistema</p>
-                        <a href="@Url.Action("Create", "Usuarios")" class="pulse-button">
-                            <span>Agregar Usuario</span>
-                            <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
+                        
+                            <div class="mb-2">
+                                <a href="@Url.Action("Create", "Usuarios")" class="pulse-button">
+                                    <span>Agregar Usuario</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+
+                            <div>
+                                <a href="@Url.Action("Index", "Usuarios")" class="pulse-button">
+                                    <span>Editar Usuario</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
                 </div>
             </div>
 
@@ -40,11 +50,19 @@
                     </div>
                     <div class="feature-content">
                         <h3>Vehículos</h3>
-                        <p>Registro y control de vehículos autorizados para parqueo</p>
-                        <a href="@Url.Action("Create", "Vehiculo")" class="pulse-button">
-                            <span>Agregar Vehículo</span>
-                            <i class="bi bi-arrow-right"></i>
-                        </a>
+                        <div>
+                            <p>Registro y control de vehículos autorizados para parqueo</p>
+                            <a href="@Url.Action("Create", "Vehiculo")" class="pulse-button">
+                                <span>Agregar Vehículo</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="@Url.Action("Index", "Vehiculo")" class="pulse-button">
+                                <span>Editar Usuario</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,10 +76,18 @@
                     <div class="feature-content">
                         <h3>Parqueos</h3>
                         <p>Administración de espacios de estacionamiento disponibles</p>
+                        <div>
                         <a href="@Url.Action("Create", "Parqueo")" class="pulse-button">
                             <span>Agregar Parqueo</span>
                             <i class="bi bi-arrow-right"></i>
                         </a>
+                        </div>
+                        <div>
+                            <a href="@Url.Action("Index", "Parqueo")" class="pulse-button">
+                                <span>Editar Usuario</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
