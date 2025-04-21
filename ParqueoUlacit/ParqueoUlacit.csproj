@@ -269,6 +269,12 @@
     <Content Include="Views\SeguridadHome\VerificarAcceso.cshtml" />
     <Content Include="Views\SeguridadHome\IngresarVehiculo.cshtml" />
     <Content Include="Views\SeguridadHome\RegistrarSalida.cshtml" />
+    <Content Include="Views\Usuarios\Edit.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\Vehiculo\Index.cshtml" />
+    <Content Include="Views\Vehiculo\Edit.cshtml" />
+    <Content Include="Views\Parqueo\Edit.cshtml" />
+    <Content Include="Views\Parqueo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

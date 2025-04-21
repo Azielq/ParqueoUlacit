@@ -1,7 +1,145 @@
-﻿
+﻿@model IEnumerable<ParqueoUlacit.Models.TableViewModel.BitacoraParqueoTableViewModel>
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Historial de Movimientos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index Administrativo</h2>
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="section-title">Historial de Movimientos</h2>
+            <div class="section-divider"></div>
+            <p class="text-muted mt-3">Consulte el historial de movimientos de sus vehículos registrados.</p>
+        </div>
+    </div>
 
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">
+                <i class="bi bi-funnel-fill me-2"></i>Filtrar Resultados
+            </h5>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Index", "AdministrativoHome", FormMethod.Get, new { @class = "row g-3 align-items-end" }))
+            {
+                <div class="col-md-5">
+                    <label class="form-label">Mes</label>
+                    @Html.DropDownList("mes", (IEnumerable<SelectListItem>)ViewBag.Meses, new { @class = "form-select" })
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label">Año</label>
+                    @Html.DropDownList("año", (IEnumerable<SelectListItem>)ViewBag.Años, new { @class = "form-select" })
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-search me-1"></i> Buscar
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="bi bi-clock-history me-2"></i>Mis Movimientos
+            </h5>
+            <span class="badge bg-light text-dark">
+                @ViewBag.MesSeleccionado/@ViewBag.AñoSeleccionado
+            </span>
+        </div>
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Fecha y Hora</th>
+                                <th>Tipo</th>
+                                <th>Placa</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                string rowClass = "";
+
+                                // Establecer clase de fila según tipo de movimiento
+                                if (item.TipoMovimiento == "Salida")
+                                {
+                                    rowClass = "table-danger";
+                                }
+                                else if (item.TipoMovimiento == "Ingreso Rechazado")
+                                {
+                                    rowClass = "table-warning";
+                                }
+                                else
+                                {
+                                    rowClass = "table-success";
+                                }
+
+                                <tr class="@rowClass">
+                                    <td>@(item.Fecha.HasValue ? item.Fecha.Value.ToString("dd/MM/yyyy HH:mm") : "")</td>
+                                    <td>
+                                        @if (item.TipoMovimiento == "Salida")
+                                        {
+                                            <span class="badge bg-danger">Salida</span>
+                                        }
+                                        else if (item.TipoMovimiento == "Primer Ingreso")
+                                        {
+                                            <span class="badge bg-info">Primer Ingreso</span>
+                                        }
+                                        else if (item.TipoMovimiento == "Ingreso Rechazado")
+                                        {
+                                            <span class="badge bg-warning text-dark">Rechazado</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">@item.TipoMovimiento</span>
+                                        }
+                                    </td>
+                                    <td>@item.NumeroPlaca</td>
+                                    <td>
+                                        @if (item.EstadoIngreso.HasValue)
+                                        {
+                                            if (item.EstadoIngreso.Value)
+                                            {
+                                                <span class="badge bg-success">Exitoso</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-warning text-dark">Denegado</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No disponible</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info text-center">
+                    <i class="bi bi-info-circle me-2"></i>No se han registrado movimientos para sus vehículos en el período seleccionado.
+                </div>
+            }
+        </div>
+        <div class="card-footer bg-light py-3">
+            <div class="d-flex align-items-center">
+                <small class="text-muted">Mostrando @Model.Count() registro(s)</small>
+                <a href="@Url.Action("Index", "AdminHome")" class="pulse-button-inverse ms-auto">
+                    <span>Volver al Panel</span>
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

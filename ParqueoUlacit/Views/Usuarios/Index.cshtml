@@ -1,0 +1,127 @@
+﻿@model IEnumerable<ParqueoUlacit.Models.TableViewModel.UsuarioTableViewModel>
+@{
+    ViewBag.Title = "Listado de Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="section-title">Gestión de Usuarios</h2>
+            <div class="section-divider"></div>
+            <p class="text-muted mt-3">Administre los usuarios registrados en el sistema.</p>
+        </div>
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-header d-flex align-items-center bg-light py-3">
+            <h5 class="card-title mb-0">
+                <i class="bi bi-people-fill me-2"></i>Usuarios Registrados
+            </h5>
+            <a href="@Url.Action("Create", "Usuarios")" class="btn btn-success btn-sm ms-auto">
+                <i class="bi bi-person-plus-fill me-1"></i> Nuevo Usuario
+            </a>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Correo Electrónico</th>
+                            <th>Identificación</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>Rol</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Any())
+                        {
+                            foreach (var usuario in Model)
+                            {
+                                <tr>
+                                    <td>@usuario.UsuarioID</td>
+                                    <td>@usuario.Nombre</td>
+                                    <td>@usuario.Correo</td>
+                                    <td>@usuario.Identificacion</td>
+                                    <td>@usuario.FechaNacimiento.ToString("dd/MM/yyyy")</td>
+                                    <td>@usuario.RolID</td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("Editar", "Usuarios", new { id = usuario.UsuarioID })" class="btn btn-primary btn-sm me-1" title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-danger btn-sm" title="Eliminar"
+                                                onclick="prepareDelete(@usuario.UsuarioID, '@usuario.Nombre')"
+                                                data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-4">
+                                    <div class="alert alert-info mb-0">
+                                        <i class="bi bi-info-circle me-2"></i> No hay usuarios registrados en el sistema.
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-light py-3">
+            <div class="d-flex align-items-center">
+                <small class="text-muted">Mostrando @Model.Count() usuario(s)</small>
+                <a href="@Url.Action("Index", "AdminHome")" class="pulse-button-inverse ms-auto">
+                    <span>Volver al Panel</span>
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación para eliminar -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmar Eliminación
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que desea eliminar al usuario <strong id="deleteUserName"></strong>?</p>
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    <strong>Advertencia:</strong> Esta acción eliminará también todos los vehículos asociados a este usuario y no se puede deshacer.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>Cancelar
+                </button>
+                <form id="deleteForm" method="post" style="display: inline;">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash-fill me-1"></i>Eliminar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function prepareDelete(id, name) {
+            document.getElementById('deleteUserName').innerText = name;
+            document.getElementById('deleteForm').action = '@Url.Action("Eliminar", "Usuarios")/' + id;
+        }
+    </script>
+}
